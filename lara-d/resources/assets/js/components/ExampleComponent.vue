@@ -37,7 +37,7 @@
     mounted() {
       axios.get('http://localhost/test-data/test.json').then(res => {
         this.files = res.data;
-      })
+      });
     }
   }
 </script>
