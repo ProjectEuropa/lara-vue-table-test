@@ -13,8 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .scripts([
-        'resources/assets/material-js/bootstrap.min.js',
         'resources/assets/material-js/jquery-3.2.1.min.js',
+        'resources/assets/material-js/bootstrap.min.js',
         'resources/assets/material-js/jquery.nice-select.min.js',
         'resources/assets/material-js/magicsuggest-min-repair.js',
         'resources/assets/material-js/mdb.min.js',
