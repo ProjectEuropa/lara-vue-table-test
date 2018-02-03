@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <search-filter v-on:call-parent-search="searchFunction"></search-filter>
         <div class="row">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -28,7 +29,11 @@
 </template>
 
 <script>
-  export default {
+import SearchFilter from './SearchComponent';
+export default {
+    components: {
+        SearchFilter
+    },
     data() {
       return {
         files: []
@@ -38,6 +43,11 @@
       axios.get('http://localhost/test-data/test.json').then(res => {
         this.files = res.data;
       });
+    },
+    methods: {
+        searchFunction(keyword, sort) {
+            alert(keyword + sort);
+        }
     }
-  }
+}
 </script>

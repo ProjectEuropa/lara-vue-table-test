@@ -16,13 +16,13 @@ services:
     image: postgres:latest
     container_name: "postgres"
   postgres-gui:
-    image: jsoizo/franchise
+    image: donnex/pgweb
     links:
       - db
     ports:
-      - 3000:80
+      - 8080:8080
     container_name: "pg-gui"
-  client:
-    ports: 
-      - "14645:14645"
-    image: "jsoizo/franchise-client"
+  # client:
+  #   ports: 
+  #     - "14645:14645"
+  #   image: "jsoizo/franchise-client"

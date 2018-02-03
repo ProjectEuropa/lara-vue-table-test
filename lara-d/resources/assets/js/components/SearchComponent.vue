@@ -1,0 +1,51 @@
+<template>
+    <div class="container">
+        <div class="form-inline">
+            <label for="word">検索ワード： </label>
+            <div class="md-form form-group">
+                <input type="text" class="input-alternate" @keyup.enter="search" placeholder="" v-model="keyword">
+            </div>
+            <div class="md-form form-group">
+                <select id="teamSearchTags" class="form-control" name="teamSearchTags" v-model="sortSelect">
+                    <option value="new">投稿日時の新しい順</option>
+                    <option value="old">投稿日時の古い順</option>
+                </select>
+            </div>
+            <div class="md-form form-group">
+                <a class="btn btn-info" @click="search">検索</a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+        keyword: '',
+        sortSelect: 'new'
+    };
+  },
+  methods : {
+    search(){
+        this.$emit('call-parent-search', this.keyword, this.sortSelect);
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.form-inline {
+    margin-left: -30px;
+    margin-top: -15px;
+    select {
+        background-color: white;
+        margin-top: 15px;
+    }
+    .btn-info {
+        margin-top: 20px;
+    }
+}
+
+</style>
+

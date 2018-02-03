@@ -88,5 +88,7 @@
         @yield('content')
 
         <script src="{{ asset('js/material.js') }}"></script>
+
+        @yield('js')
 </body>
 </html>
