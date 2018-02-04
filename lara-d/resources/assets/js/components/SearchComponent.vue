@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="form-inline">
-            <label for="word">検索ワード： </label>
+            <label for="keyword">検索ワード： </label>
             <div class="md-form form-group">
                 <input type="text" class="input-alternate" @keyup.enter="search" placeholder="" v-model="keyword">
             </div>
@@ -46,6 +46,5 @@ export default {
         margin-top: 20px;
     }
 }
-
 </style>
 

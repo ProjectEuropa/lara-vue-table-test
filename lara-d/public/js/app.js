@@ -30332,6 +30332,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -30340,23 +30355,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      files: []
+      files: [],
+      csrf: myToken.csrfToken
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('http://localhost/test-data/test.json').then(function (res) {
+    axios.get("http://localhost/test-data/test.json").then(function (res) {
       _this.files = res.data;
-    });
-    this.$events.$on("search", function (eventData) {
-      return _this.onSearch(eventData);
     });
   },
 
   methods: {
-    searchFunction: function searchFunction(keyword, sort) {
-      alert(keyword + sort);
+    searchFunction: function searchFunction(keyword, sortSelect) {
+      alert(keyword + sortSelect);
+    },
+
+    getLinkFile: function getLinkFile(id) {
+      return id;
     }
   }
 });
@@ -30847,7 +30864,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "form-inline" }, [
-      _c("label", { attrs: { for: "word" } }, [_vm._v("検索ワード： ")]),
+      _c("label", { attrs: { for: "keyword" } }, [_vm._v("検索ワード： ")]),
       _vm._v(" "),
       _c("div", { staticClass: "md-form form-group" }, [
         _c("input", {
@@ -30956,7 +30973,7 @@ var render = function() {
     [
       _c("search-filter", { on: { "call-parent-search": _vm.searchFunction } }),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row table-responsive" }, [
         _c("table", { staticClass: "table table-bordered table-hover" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -30964,7 +30981,14 @@ var render = function() {
             "tbody",
             _vm._l(_vm.files, function(file) {
               return _c("tr", { key: file.id }, [
-                _c("td", [_vm._v(_vm._s(file.id))]),
+                _c("td", [
+                  _c("a", { attrs: { href: _vm.getLinkFile(file.id) } }, [
+                    _c("i", {
+                      staticClass: "fa fa-cloud-download",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(file.owner))]),
                 _vm._v(" "),
@@ -30974,7 +30998,25 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(file.created_at))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(file.delete_flg))])
+                _c("td", [
+                  file.delete_flg == 1
+                    ? _c(
+                        "form",
+                        {
+                          staticClass: "form-horizontal",
+                          attrs: { method: "post", action: "" }
+                        },
+                        [
+                          _vm._m(1, true),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "_token" },
+                            domProps: { value: _vm.csrf }
+                          })
+                        ]
+                      )
+                    : _vm._e()
+                ])
               ])
             })
           )
@@ -31002,6 +31044,33 @@ var staticRenderFns = [
         _c("th", [_vm._v("アップロード日時")]),
         _vm._v(" "),
         _c("th", [_vm._v("削除")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "form-inline" }, [
+        _c("input", {
+          staticClass: "input-alternate",
+          attrs: { type: "text", placeholder: "削除パスワード" }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "hidden", name: "id", value: "278" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-delete",
+            attrs: { type: "submit", value: "SGTSYR1.CHE" }
+          },
+          [_vm._v("削除")]
+        )
       ])
     ])
   }
