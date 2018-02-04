@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/simpleupload', function () {
+    return view('upload.index');
+});
 
 Auth::routes();
 

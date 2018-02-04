@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/material.css') }}" rel="stylesheet">
     <link href="{{ asset('css/top.css') }}" rel="stylesheet">
+    <script>
+        window.myToken =  <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
+    @yield('css')
 </head>
 <body>
     <body>
@@ -86,9 +87,16 @@
         </header>
 
         @yield('content')
-
+        <footer>
+            <div class="container text-center">
+                <small>© 2016-<span id="nowYear"></span> Team Project Europa</small>
+            </div>
+        </footer>
+        
+        <script>
+            document.getElementById("nowYear").innerText = new Date().getFullYear();
+        </script>
         <script src="{{ asset('js/material.js') }}"></script>
-
         @yield('js')
 </body>
 </html>
