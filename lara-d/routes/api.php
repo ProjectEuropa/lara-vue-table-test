@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->get('/search/{searchtype}', function (Request $request, $searchtype) {
+    return DB::table('files')
+        ->select('id', 'upload_owner_name', 'file_name', 'file_comment', 'created_at', 'upload_user_id', 'search_tag1', 'search_tag2', 'search_tag3', 'search_tag4')
+        ->where('data_type', '=', '1')
+        ->paginate(10);
 });
