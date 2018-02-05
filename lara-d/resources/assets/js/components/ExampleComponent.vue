@@ -1,6 +1,7 @@
 <template>
     <div>
         <search-filter v-on:call-parent-search="searchFunction"></search-filter>
+        <div class="table-number">{{ total }}件中 {{ from }} 〜 {{ to }}件</div>
         <div class="row table-responsive">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -21,7 +22,7 @@
                             </a>
                         </td>
                         <td>{{ file.upload_owner_name }}</td>
-                        <td><p v-html="nl2br(file.file_comment)"></p>
+                        <td><div v-html="nl2br(file.file_comment)"></div>
                             <span v-if="file.search_tag1"><i class="fa fa-search"></i>{{file.search_tag1}}</span>
                             <span v-if="file.search_tag2"><i class="fa fa-search"></i>{{file.search_tag2}}</span>
                             <span v-if="file.search_tag3"><i class="fa fa-search"></i>{{file.search_tag3}}</span>
@@ -48,16 +49,16 @@
         <div class="d-flex justify-content-left">
             <nav class="my-4 pt-2">
                 <ul class="pagination pagination-circle mb-0">
-                    <li class="page-item disabled clearfix d-none d-md-block">
+                    <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url)">
                         <a class="page-link waves-effect waves-effect">First</a>
                     </li>
-                    <li class="page-item disabled">
-                        <a class="page-link waves-effect waves-effect" aria-label="Previous">
+                    <li class="page-item">
+                        <a class="page-link waves-effect waves-effect" aria-label="Previous" @click="pagenate(prev_page_url)">
                             <span aria-hidden="true">«</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
-                    <li class="page-item ">
+                    <!-- <li class="page-item">
                         <a class="page-link waves-effect waves-effect">1</a>
                     </li>
                     <li class="page-item">
@@ -71,15 +72,15 @@
                     </li>
                     <li class="page-item">
                         <a class="page-link waves-effect waves-effect">5</a>
-                    </li>
+                    </li> -->
                     <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" aria-label="Next">
+                        <a class="page-link waves-effect waves-effect" aria-label="Next"  @click="pagenate(next_page_url)">
                             <span aria-hidden="true">»</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
                     <li class="page-item clearfix d-none d-md-block">
-                        <a class="page-link waves-effect waves-effect">Last</a>
+                        <a class="page-link waves-effect waves-effect" @click="pagenate(last_page_url)">Last</a>
                     </li>
                 </ul>
             </nav>
@@ -96,34 +97,46 @@ export default {
   data() {
     return {
         files: [],
-        current_page: 1,
-        last_page: 1,
-        total: 1,
+        current_page: 0,
+        last_page: 0,
+        total: 0,
         from: 0,
         to: 0,
         csrf: myToken.csrfToken,
+        first_page_url: '',
+        last_page_url: '',
+        next_page_url: '',
+        prev_page_url: '',
     };
   },
   mounted() {
-      axios.get("api/search/team?page=7").then(res => {
-      this.files = res.data.data;
-      this.current_page = res.current_page;
-      this.last_page = res.last_page;
-      this.total = res.total;
-      this.from = res.from;
-      this.to = res.to;
-      console.log(res);
-    });
+      this.pagenate('api/search/team');
   },
   methods: {
     searchFunction(keyword, sortSelect) {
       alert(keyword + sortSelect);
+      console.log(this);
     },
     getLinkFile: function(id) {
       return id;
     },
     nl2br(value) {
       return value !== null ? value.replace(/\n/g, "<br>") : '';
+    },
+    pagenate(url) {
+      axios.get(url).then(res => {
+        this.files = res.data.data;
+        this.current_page = res.data.current_page;
+        this.last_page = res.data.last_page;
+        this.total = res.data.total;
+        this.from = res.data.from;
+        this.to = res.data.to;
+        this.first_page_url = res.data.first_page_url;
+        this.last_page_url = res.data.last_page_url;
+        this.next_page_url = res.data.next_page_url;
+        this.prev_page_url = res.data.prev_page_url;
+        console.log(res);
+      });
     }
   }
 };

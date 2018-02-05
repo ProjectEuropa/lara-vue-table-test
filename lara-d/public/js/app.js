@@ -30778,6 +30778,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -30787,31 +30788,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       files: [],
-      current_page: 1,
-      last_page: 1,
-      total: 1,
+      current_page: 0,
+      last_page: 0,
+      total: 0,
       from: 0,
       to: 0,
-      csrf: myToken.csrfToken
+      csrf: myToken.csrfToken,
+      first_page_url: '',
+      last_page_url: '',
+      next_page_url: '',
+      prev_page_url: ''
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get("api/search/team?page=7").then(function (res) {
-      _this.files = res.data.data;
-      _this.current_page = res.current_page;
-      _this.last_page = res.last_page;
-      _this.total = res.total;
-      _this.from = res.from;
-      _this.to = res.to;
-      console.log(res);
-    });
+    this.pagenate('api/search/team');
   },
 
   methods: {
     searchFunction: function searchFunction(keyword, sortSelect) {
       alert(keyword + sortSelect);
+      console.log(this);
     },
 
     getLinkFile: function getLinkFile(id) {
@@ -30819,6 +30815,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     nl2br: function nl2br(value) {
       return value !== null ? value.replace(/\n/g, "<br>") : '';
+    },
+    pagenate: function pagenate(url) {
+      var _this = this;
+
+      axios.get(url).then(function (res) {
+        _this.files = res.data.data;
+        _this.current_page = res.data.current_page;
+        _this.last_page = res.data.last_page;
+        _this.total = res.data.total;
+        _this.from = res.data.from;
+        _this.to = res.data.to;
+        _this.first_page_url = res.data.first_page_url;
+        _this.last_page_url = res.data.last_page_url;
+        _this.next_page_url = res.data.next_page_url;
+        _this.prev_page_url = res.data.prev_page_url;
+        console.log(res);
+      });
     }
   }
 });
@@ -30909,7 +30922,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n.form-inline[data-v-6406c664] {\n  margin-left: -30px;\n  margin-top: -15px;\n}\n.form-inline select[data-v-6406c664] {\n    background-color: white;\n    margin-top: 15px;\n}\n.form-inline .btn-info[data-v-6406c664] {\n    margin-top: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.form-inline[data-v-6406c664] {\n  margin-left: -15px;\n  margin-top: -15px;\n}\n.form-inline select[data-v-6406c664] {\n    background-color: white;\n    margin-top: 15px;\n}\n.form-inline .btn-info[data-v-6406c664] {\n    margin-top: 20px;\n}\n", ""]);
 
 // exports
 
@@ -31074,6 +31087,17 @@ var render = function() {
     [
       _c("search-filter", { on: { "call-parent-search": _vm.searchFunction } }),
       _vm._v(" "),
+      _c("div", { staticClass: "table-number" }, [
+        _vm._v(
+          _vm._s(_vm.total) +
+            "件中 " +
+            _vm._s(_vm.from) +
+            " 〜 " +
+            _vm._s(_vm.to) +
+            "件"
+        )
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "row table-responsive" }, [
         _c("table", { staticClass: "table table-bordered table-hover" }, [
           _vm._m(0),
@@ -31094,7 +31118,7 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(file.upload_owner_name))]),
                 _vm._v(" "),
                 _c("td", [
-                  _c("p", {
+                  _c("div", {
                     domProps: {
                       innerHTML: _vm._s(_vm.nl2br(file.file_comment))
                     }
@@ -31158,7 +31182,89 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _c("div", { staticClass: "d-flex justify-content-left" }, [
+        _c("nav", { staticClass: "my-4 pt-2" }, [
+          _c("ul", { staticClass: "pagination pagination-circle mb-0" }, [
+            _c(
+              "li",
+              {
+                staticClass: "page-item clearfix d-none d-md-block",
+                on: {
+                  click: function($event) {
+                    _vm.pagenate(_vm.first_page_url)
+                  }
+                }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "page-link waves-effect waves-effect" },
+                  [_vm._v("First")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link waves-effect waves-effect",
+                  attrs: { "aria-label": "Previous" },
+                  on: {
+                    click: function($event) {
+                      _vm.pagenate(_vm.prev_page_url)
+                    }
+                  }
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("«")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link waves-effect waves-effect",
+                  attrs: { "aria-label": "Next" },
+                  on: {
+                    click: function($event) {
+                      _vm.pagenate(_vm.next_page_url)
+                    }
+                  }
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("»")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "page-item clearfix d-none d-md-block" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "page-link waves-effect waves-effect",
+                  on: {
+                    click: function($event) {
+                      _vm.pagenate(_vm.last_page_url)
+                    }
+                  }
+                },
+                [_vm._v("Last")]
+              )
+            ])
+          ])
+        ])
+      ])
     ],
     1
   )
@@ -31208,92 +31314,6 @@ var staticRenderFns = [
           },
           [_vm._v("削除")]
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-left" }, [
-      _c("nav", { staticClass: "my-4 pt-2" }, [
-        _c("ul", { staticClass: "pagination pagination-circle mb-0" }, [
-          _c(
-            "li",
-            { staticClass: "page-item disabled clearfix d-none d-md-block" },
-            [
-              _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-                _vm._v("First")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item disabled" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link waves-effect waves-effect",
-                attrs: { "aria-label": "Previous" }
-              },
-              [
-                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item " }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("1")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("2")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("3")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("4")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("5")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c(
-              "a",
-              {
-                staticClass: "page-link waves-effect waves-effect",
-                attrs: { "aria-label": "Next" }
-              },
-              [
-                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")]),
-                _vm._v(" "),
-                _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item clearfix d-none d-md-block" }, [
-            _c("a", { staticClass: "page-link waves-effect waves-effect" }, [
-              _vm._v("Last")
-            ])
-          ])
-        ])
       ])
     ])
   }
