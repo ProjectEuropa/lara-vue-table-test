@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .form-inline {
-    margin-left: -30px;
+    margin-left: -15px;
     margin-top: -15px;
     select {
         background-color: white;
