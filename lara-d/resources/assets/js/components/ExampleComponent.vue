@@ -52,29 +52,19 @@
                     <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url)">
                         <a class="page-link waves-effect waves-effect">First</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" aria-label="Previous" @click="pagenate(prev_page_url)">
+                    <li :class="[{disabled: prev_page_url === null}, 'page-item']">
+                        <a :class="[{disabled: prev_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Previous" @click="pagenate(prev_page_url)">
                             <span aria-hidden="true">«</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
-                    <!-- <li class="page-item">
-                        <a class="page-link waves-effect waves-effect">1</a>
+                    <li
+                        v-for="i in displayPageRange"
+                        :class="[{active: i === current_page}, 'page-item']" :key="i">
+                        <a @click="pageSelect(i)" class="page-link waves-effect waves-effect">{{ i }}</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect">5</a>
-                    </li> -->
-                    <li class="page-item">
-                        <a class="page-link waves-effect waves-effect" aria-label="Next"  @click="pagenate(next_page_url)">
+                    <li :class="[{disabled: next_page_url === null}, 'page-item']">
+                        <a :class="[{disabled: next_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Next"  @click="pagenate(next_page_url)">
                             <span aria-hidden="true">»</span>
                             <span class="sr-only">Next</span>
                         </a>
@@ -90,40 +80,76 @@
 
 <script>
 import SearchFilter from "./SearchComponent";
+
 export default {
   components: {
     SearchFilter
   },
   data() {
     return {
-        files: [],
-        current_page: 0,
-        last_page: 0,
-        total: 0,
-        from: 0,
-        to: 0,
-        csrf: myToken.csrfToken,
-        first_page_url: '',
-        last_page_url: '',
-        next_page_url: '',
-        prev_page_url: '',
+      files: [],
+      current_page: 0,
+      last_page: 0,
+      total: 0,
+      from: 0,
+      to: 0,
+      pageRange: 10,
+      csrf: myToken.csrfToken,
+      first_page_url: '',
+      last_page_url: '',
+      next_page_url: '',
+      prev_page_url: '',
+      path: '',
+      seach_type: document.getElementById('search-type').value,
     };
   },
   mounted() {
-      this.pagenate('api/search/team');
+    this.pagenate('/api/search/' + this.seach_type);
+  },
+  computed: {
+    displayPageRange() {
+      const half = Math.ceil(this.pageRange / 2);
+      let start, end;
+
+      if (this.last_page < this.pageRange) {
+        start = 1;
+        end = this.last_page;
+      } else if (this.current_page < half) {
+        start = 1;
+        end = start + this.pageRange - 1;
+      } else if (this.last_page - half < this.current_page) {
+        end = this.last_page;
+        start = end - this.pageRange + 1;
+      } else {
+        start = this.current_page - half + 1;
+        end = this.current_page + half;
+      }
+
+      let indexes = [];
+      for (let i = start; i <= end; i++) {
+        indexes.push(i);
+      }
+      return indexes;
+    }
   },
   methods: {
     searchFunction(keyword, sortSelect) {
-      alert(keyword + sortSelect);
-      console.log(this);
+      this.pagenate(this.path + '?ordertype=' + sortSelect);
     },
     getLinkFile: function(id) {
       return id;
     },
     nl2br(value) {
-      return value !== null ? value.replace(/\n/g, "<br>") : '';
+      return value !== null ? value.replace(/\n/g, '<br>') : '';
+    },
+    pageSelect(i) {
+      this.pagenate(this.path + '?page=' + String(i));
     },
     pagenate(url) {
+      const spinHandle = loadingOverlay().activate();
+      setTimeout(function() {
+        loadingOverlay().cancel(spinHandle);
+      }, 1000);
       axios.get(url).then(res => {
         this.files = res.data.data;
         this.current_page = res.data.current_page;
@@ -135,7 +161,9 @@ export default {
         this.last_page_url = res.data.last_page_url;
         this.next_page_url = res.data.next_page_url;
         this.prev_page_url = res.data.prev_page_url;
+        this.path = res.data.path;
         console.log(res);
+        window.scrollTo(0, 0);
       });
     }
   }
@@ -144,22 +172,23 @@ export default {
 
 <style lang="scss" scoped>
 .table-header {
-    .download,.owner  {
-        width: 100px;
-    }
-    .created-at {
-        width: 160px;
-    }
-    .delete {
-        width: 200px
-    }
+  .download,
+  .owner {
+    width: 100px;
+  }
+  .created-at {
+    width: 160px;
+  }
+  .delete {
+    width: 200px;
+  }
 }
 
-@media screen and (max-width:767px){
-    table {
-        overflow: auto;
-        white-space: nowrap;
-    }
+@media screen and (max-width: 767px) {
+  table {
+    overflow: auto;
+    white-space: nowrap;
+  }
 }
 </style>
 
