@@ -30643,7 +30643,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n.table-header .download[data-v-7168fb6a], .table-header .owner[data-v-7168fb6a] {\n  width: 100px;\n}\n.table-header .created-at[data-v-7168fb6a] {\n  width: 160px;\n}\n.table-header .delete[data-v-7168fb6a] {\n  width: 200px;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-7168fb6a] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table-header .download[data-v-7168fb6a],\n.table-header .owner[data-v-7168fb6a] {\n  width: 100px;\n}\n.table-header .created-at[data-v-7168fb6a] {\n  width: 160px;\n}\n.table-header .delete[data-v-7168fb6a] {\n  width: 200px;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-7168fb6a] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
 
 // exports
 
@@ -30779,6 +30779,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -30793,32 +30799,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       total: 0,
       from: 0,
       to: 0,
+      pageRange: 10,
       csrf: myToken.csrfToken,
-      first_page_url: '',
-      last_page_url: '',
-      next_page_url: '',
-      prev_page_url: ''
+      first_page_url: "",
+      last_page_url: "",
+      next_page_url: "",
+      prev_page_url: "",
+      path: "",
+      seach_type: document.getElementById('search-type').value
     };
   },
   mounted: function mounted() {
-    this.pagenate('api/search/team');
+    this.pagenate("/api/search/" + this.seach_type);
   },
 
+  computed: {
+    displayPageRange: function displayPageRange() {
+      var half = Math.ceil(this.pageRange / 2);
+      var start = void 0,
+          end = void 0;
+
+      if (this.last_page < this.pageRange) {
+        // ページネーションのrangeよりページ数がすくない場合
+        start = 1;
+        end = this.last_page;
+      } else if (this.current_page < half) {
+        // 左端のページ番号が1になったとき
+        start = 1;
+        end = start + this.pageRange - 1;
+      } else if (this.last_page - half < this.current_page) {
+        // 右端のページ番号が総ページ数になったとき
+        end = this.last_page;
+        start = end - this.pageRange + 1;
+      } else {
+        // activeページを中央にする
+        start = this.current_page - half + 1;
+        end = this.current_page + half;
+      }
+
+      var indexes = [];
+      for (var i = start; i <= end; i++) {
+        indexes.push(i);
+      }
+      return indexes;
+    }
+  },
   methods: {
     searchFunction: function searchFunction(keyword, sortSelect) {
-      alert(keyword + sortSelect);
-      console.log(this);
+      this.pagenate(this.path + '?ordertype=' + sortSelect);
     },
 
     getLinkFile: function getLinkFile(id) {
       return id;
     },
     nl2br: function nl2br(value) {
-      return value !== null ? value.replace(/\n/g, "<br>") : '';
+      return value !== null ? value.replace(/\n/g, '<br>') : '';
+    },
+    pageSelect: function pageSelect(i) {
+      this.pagenate(this.path + '?page=' + String(i));
     },
     pagenate: function pagenate(url) {
       var _this = this;
 
+      var spinHandle = loadingOverlay().activate();
+      setTimeout(function () {
+        loadingOverlay().cancel(spinHandle);
+      }, 1000);
       axios.get(url).then(function (res) {
         _this.files = res.data.data;
         _this.current_page = res.data.current_page;
@@ -30830,7 +30876,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.last_page_url = res.data.last_page_url;
         _this.next_page_url = res.data.next_page_url;
         _this.prev_page_url = res.data.prev_page_url;
+        _this.path = res.data.path;
         console.log(res);
+        window.scrollTo(0, 0);
       });
     }
   }
@@ -30958,7 +31006,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       keyword: '',
-      sortSelect: 'new'
+      sortSelect: 'desc'
     };
   },
 
@@ -31045,11 +31093,11 @@ var render = function() {
             }
           },
           [
-            _c("option", { attrs: { value: "new" } }, [
+            _c("option", { attrs: { value: "desc" } }, [
               _vm._v("投稿日時の新しい順")
             ]),
             _vm._v(" "),
-            _c("option", { attrs: { value: "old" } }, [
+            _c("option", { attrs: { value: "asc" } }, [
               _vm._v("投稿日時の古い順")
             ])
           ]
@@ -31184,85 +31232,138 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-left" }, [
         _c("nav", { staticClass: "my-4 pt-2" }, [
-          _c("ul", { staticClass: "pagination pagination-circle mb-0" }, [
-            _c(
-              "li",
-              {
-                staticClass: "page-item clearfix d-none d-md-block",
-                on: {
-                  click: function($event) {
-                    _vm.pagenate(_vm.first_page_url)
+          _c(
+            "ul",
+            { staticClass: "pagination pagination-circle mb-0" },
+            [
+              _c(
+                "li",
+                {
+                  staticClass: "page-item clearfix d-none d-md-block",
+                  on: {
+                    click: function($event) {
+                      _vm.pagenate(_vm.first_page_url)
+                    }
                   }
-                }
-              },
-              [
-                _c(
-                  "a",
-                  { staticClass: "page-link waves-effect waves-effect" },
-                  [_vm._v("First")]
+                },
+                [
+                  _c(
+                    "a",
+                    { staticClass: "page-link waves-effect waves-effect" },
+                    [_vm._v("First")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  class: [{ disabled: _vm.prev_page_url === null }, "page-item"]
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      class: [
+                        { disabled: _vm.prev_page_url === null },
+                        "page-link waves-effect waves-effect"
+                      ],
+                      attrs: { "aria-label": "Previous" },
+                      on: {
+                        click: function($event) {
+                          _vm.pagenate(_vm.prev_page_url)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("«")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Previous")
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.displayPageRange, function(i) {
+                return _c(
+                  "li",
+                  {
+                    key: i,
+                    class: [{ active: i === _vm.current_page }, "page-item"]
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link waves-effect waves-effect",
+                        on: {
+                          click: function($event) {
+                            _vm.pageSelect(i)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(i))]
+                    )
+                  ]
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
+              }),
+              _vm._v(" "),
               _c(
-                "a",
+                "li",
                 {
-                  staticClass: "page-link waves-effect waves-effect",
-                  attrs: { "aria-label": "Previous" },
-                  on: {
-                    click: function($event) {
-                      _vm.pagenate(_vm.prev_page_url)
-                    }
-                  }
+                  class: [{ disabled: _vm.next_page_url === null }, "page-item"]
                 },
                 [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("«")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+                  _c(
+                    "a",
+                    {
+                      class: [
+                        { disabled: _vm.next_page_url === null },
+                        "page-link waves-effect waves-effect"
+                      ],
+                      attrs: { "aria-label": "Next" },
+                      on: {
+                        click: function($event) {
+                          _vm.pagenate(_vm.next_page_url)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("»")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+                    ]
+                  )
                 ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
+              ),
+              _vm._v(" "),
               _c(
-                "a",
-                {
-                  staticClass: "page-link waves-effect waves-effect",
-                  attrs: { "aria-label": "Next" },
-                  on: {
-                    click: function($event) {
-                      _vm.pagenate(_vm.next_page_url)
-                    }
-                  }
-                },
+                "li",
+                { staticClass: "page-item clearfix d-none d-md-block" },
                 [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("»")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link waves-effect waves-effect",
+                      on: {
+                        click: function($event) {
+                          _vm.pagenate(_vm.last_page_url)
+                        }
+                      }
+                    },
+                    [_vm._v("Last")]
+                  )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item clearfix d-none d-md-block" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "page-link waves-effect waves-effect",
-                  on: {
-                    click: function($event) {
-                      _vm.pagenate(_vm.last_page_url)
-                    }
-                  }
-                },
-                [_vm._v("Last")]
-              )
-            ])
-          ])
+            ],
+            2
+          )
         ])
       ])
     ],

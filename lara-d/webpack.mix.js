@@ -20,11 +20,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/material-js/mdb.min.js',
         'resources/assets/material-js/popper.min.js',
         'resources/assets/material-js/prism.js',
+        'resources/assets/material-js/loadingOverlay.js'
     ], 'public/js/material.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .styles([
     'resources/assets/css/bootstrap.min.css',
     'resources/assets/css/mdb.min.css',
     'resources/assets/css/nice-select.css',
-    'public/css/vendor/style-nice.css'
     ], 'public/css/material.css');

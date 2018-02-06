@@ -29,3 +29,387 @@ Prism.languages.css={comment:/\/\*[\w\W]*?\*\//,atrule:{pattern:/@[\w-]+?.*?(;|(
 Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\w\W]*?\*\//,lookbehind:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0}],string:/("|')(\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,"class-name":{pattern:/((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/i,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,"boolean":/\b(true|false)\b/,"function":/[a-z0-9_]+(?=\()/i,number:/\b-?(?:0x[\da-f]+|\d*\.?\d+(?:e[+-]?\d+)?)\b/i,operator:/--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,punctuation:/[{}[\];(),.:]/};
 Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|true|try|typeof|var|void|while|with|yield)\b/,number:/\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,"function":/[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*(?=\()/i}),Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,lookbehind:!0}}),Prism.languages.insertBefore("javascript","class-name",{"template-string":{pattern:/`(?:\\`|\\?[^`])*`/,inside:{interpolation:{pattern:/\$\{[^}]+\}/,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}}}),Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/<script[\w\W]*?>[\w\W]*?<\/script>/i,inside:{tag:{pattern:/<script[\w\W]*?>|<\/script>/i,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript},alias:"language-javascript"}}),Prism.languages.js=Prism.languages.javascript;
 Prism.languages.scss=Prism.languages.extend("css",{comment:{pattern:/(^|[^\\])(?:\/\*[\w\W]*?\*\/|\/\/.*)/,lookbehind:!0},atrule:{pattern:/@[\w-]+(?:\([^()]+\)|[^(])*?(?=\s+[{;])/,inside:{rule:/@[\w-]+/}},url:/(?:[-a-z]+-)*url(?=\()/i,selector:{pattern:/(?=\S)[^@;\{\}\(\)]?([^@;\{\}\(\)]|&|#\{\$[-_\w]+\})+(?=\s*\{(\}|\s|[^\}]+(:|\{)[^\}]+))/m,inside:{placeholder:/%[-_\w]+/}}}),Prism.languages.insertBefore("scss","atrule",{keyword:[/@(?:if|else(?: if)?|for|each|while|import|extend|debug|warn|mixin|include|function|return|content)/i,{pattern:/( +)(?:from|through)(?= )/,lookbehind:!0}]}),Prism.languages.insertBefore("scss","property",{variable:/\$[-_\w]+|#\{\$[-_\w]+\}/}),Prism.languages.insertBefore("scss","function",{placeholder:{pattern:/%[-_\w]+/,alias:"selector"},statement:/\B!(?:default|optional)\b/i,"boolean":/\b(?:true|false)\b/,"null":/\bnull\b/,operator:{pattern:/(\s)(?:[-+*\/%]|[=!]=|<=?|>=?|and|or|not)(?=\s)/,lookbehind:!0}}),Prism.languages.scss.atrule.inside.rest=Prism.util.clone(Prism.languages.scss);
+var loadingOverlay;
+
+(function() {
+    if (typeof(loadingOverlay) !== 'undefined') return;
+
+    var lastSpinHandle = "";
+
+    var heredoc = function(f) {
+        return f.toString().match(/\/\*\s*([\s\S]*?)\s*\*\//m)[1];
+    };
+    var lut = [];
+    for (var il = 0; il < 256; il++) { lut[il] = (il < 16 ? '0' : '') + (il).toString(16); }
+    var uuid = function() {
+        var d0 = Math.random() * 0xffffffff | 0;
+        var d1 = Math.random() * 0xffffffff | 0;
+        var d2 = Math.random() * 0xffffffff | 0;
+        var d3 = Math.random() * 0xffffffff | 0;
+        return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + '-' +
+            lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + '-' + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + '-' +
+            lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + '-' + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
+            lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
+    };
+    var makeCRCTable = function() {
+        var c;
+        var crcTable = [];
+        for (var n = 0; n < 256; n++) {
+            c = n;
+            for (var k = 0; k < 8; k++) {
+                c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+            }
+            crcTable[n] = c;
+        }
+        return crcTable;
+    }
+    var crcTable = null;
+    var crc32 = function(str) {
+        if (!crcTable) crcTable = makeCRCTable();
+        var crc = 0 ^ (-1);
+
+        for (var i = 0; i < str.length; i++) {
+            crc = (crc >>> 8) ^ crcTable[(crc ^ str.charCodeAt(i)) & 0xFF];
+        }
+
+        return (crc ^ (-1)) >>> 0;
+    };
+
+    var showTarget = function(selector) {
+
+        var elem = document.querySelectorAll(selector);
+        for (var i = 0; i < elem.length; i++) {
+            elem[i].style.display = "block";
+        }
+
+
+    };
+
+    var hideTarget = function(selector) {
+
+        var elem = document.querySelectorAll(selector);
+        for (var i = 0; i < elem.length; i++) {
+            elem[i].style.display = "none";
+        }
+
+    };
+
+    var appendHtmlToTarget = function(selector, html) {
+        var elem = document.querySelectorAll(selector);
+        for (var i = 0; i < elem.length; i++) {
+            elem[i].insertAdjacentHTML('beforeend', html);
+        }
+    };
+
+    var lo = (function() {
+
+        var classNS = 'lo';
+        var idNS = 'lo-' + uuid();
+
+        var paramDefault = {
+            'wrapClass': classNS + '-wrap',
+            'spinClass': classNS + '-spin',
+            'spinID': idNS,
+            'target': 'body',
+            'spinMinMS': 300,
+            'spinWaitMS': 100,
+        };
+
+
+        var param2hash = function(param) {
+            return crc32(param['wrapClass'] + param['spinClass'] + param['spinID']);
+        };
+
+        var cache = {};
+
+        return {
+            uuid: uuid,
+            cache: function(param, createItemCallback) {
+                var hash = param2hash(param);
+                if (cache[hash]) return cache[hash];
+                cache[hash] = createItemCallback();
+                return cache[hash];
+            },
+            config2param: function(config) {
+                var param = paramDefault;
+                if ((typeof config === 'undefined') || (typeof config !== 'object')) {
+                    return param;
+                }
+                for (var prop in param) {
+                    if (typeof config[prop] !== 'undefined') {
+                        param[prop] = config[prop];
+                    }
+                }
+                return param;
+            },
+        };
+    })();
+
+
+    loadingOverlay = function(config) {
+        var param = lo.config2param(config);
+        return lo.cache(param, function() {
+            var target = '#' + param['spinID'];
+            ////console.log('target...');
+            ////console.debug(target);
+
+
+            var cancelSpinnerOn = false;
+
+            var spinnerStart;
+
+            var cancelled_cb_proto = {
+                'invoked': false,
+                'cb': null,
+            };
+            var cancelled_cb_hash = {};
+            var cancelled_status_hash = {};
+
+            var cancelled_hash_proto = {
+                'status': false,
+                'cb_hash': {},
+            };
+            var cancelled_hash = {};
+
+            var activateSpinner = function() {
+                var mySpinHandle = uuid();
+                lastSpinHandle = mySpinHandle;
+                cancelSpinnerOn = false;
+                cancelled_status_hash[mySpinHandle] = false;
+                cancelled_hash[mySpinHandle] = cancelled_hash_proto;
+                ////console.log('actvate: '+mySpinHandle);
+                setTimeout(function() {
+                    if (cancelled_status_hash[mySpinHandle] == true) {
+                        return;
+                    }
+                    if (cancelSpinnerOn && (lastSpinHandle == mySpinHandle)) {
+                        cancelSpinnerOn = false;
+                        lastSpinHandle = null;
+                        return false;
+                    }
+                    if (lastSpinHandle != mySpinHandle) {
+                        return false;
+                    }
+                    spinnerStart = Date.now();
+                    showTarget(target);
+                }, param.spinWaitMS);
+                return mySpinHandle;
+            };
+            var spinMin = param.spinMinMS;
+            var cancelSpinner = function cancelSpinnerCallee(spinHandle, cancelledCallback, cancelUUID) {
+                //console.log("cancel: " + spinHandle);
+                var cUUID;
+                if (typeof cancelUUID === 'undefined') {
+                    cUUID = lo.uuid();
+                } else {
+                    cUUID = cancelUUID;
+                }
+                if (cancelled_status_hash[spinHandle] === true) {
+                    if (typeof cancelled_cb_hash[cUUID] !== 'undefined') {
+                        if (!cancelled_cb_hash[cUUID].invoked) {
+                            cancelled_cb_hash[cUUID].invoked = true;
+                            cancelled_cb_hash[cUUID]();
+                        }
+                    }
+                    return;
+                }
+
+                cancelled_cb_hash[cUUID] = cancelled_cb_proto;
+
+                if (typeof cancelledCallback !== 'undefined') {
+                    cancelled_cb_hash[cUUID].cb = cancelledCallback;
+                }
+
+                if (typeof cancelled_hash[spinHandle] === 'undefined') {
+                    cancelled_hash[spinHandle] = cancelled_hash_proto;
+                }
+                cancelled_hash[spinHandle].cb_hash[cUUID] = cancelled_cb_hash[cUUID];
+
+                cancelSpinnerOn = true;
+                setTimeout(function() {
+                    var spinTime = Date.now() - spinnerStart;
+                    if (spinTime < spinMin) {
+                        setTimeout(function() {
+                            cancelSpinnerCallee(spinHandle, cancelledCallback, cUUID);
+                        }, 10);
+                    } else {
+
+                        cancelled_status_hash[spinHandle] = true;
+                        if (typeof cancelledCallback === 'function') {
+                            //console.log('cb cancel normal');
+                            cancelled_hash[spinHandle].cb_hash[cUUID].invoked = true;
+                            cancelled_cb_hash[cUUID].invoked = true;
+                            cancelledCallback();
+                            for (var c in cancelled_hash[spinHandle].cb_hash) {
+                                if (!cancelled_hash[spinHandle].cb_hash[c].invoked && (typeof cancelled_hash[spinHandle].cb_hash[c].cb === 'function')) {
+                                    cancelled_hash[spinHandle].cb_hash[c].invoked = true;
+                                    cancelled_hash[spinHandle].cb_hash[c].cb();
+                                }
+                            }
+                        }
+                        //console.log('cancel spinHandle ' + spinHandle + ' check if others are uncancelled');
+                        for (var hh in cancelled_status_hash) {
+                            if (!cancelled_status_hash[hh]) {
+                                return;
+                            }
+                        }
+                        hideTarget(target);
+                    }
+                }, 10);
+            };
+            //typeof cancelSpinnerCallee === 'undefined';
+            delete cancelSpinnerCallee;
+            var obj = {
+                cancel: cancelSpinner,
+                activate: activateSpinner,
+            };
+
+            var targetElem = document.querySelectorAll(target);
+            if (targetElem) {
+                targetElem.forEach(function(elem) {
+                    if (elem.classList.contains(param['class'])) {
+                        return obj;
+                    }
+                });
+            }
+
+            appendHtmlToTarget(param.target, heredoc(function() {
+                /*
+                               <style>
+                            .%wrapClass% {
+                               position: fixed;
+                               z-index: 999999;
+                               margin: auto;
+                               top: 0;
+                               left: 0;
+                               bottom: 0;
+                               right: 0;
+
+                            }
+
+                            .%wrapClass%:before {
+                               content: '';
+                               display: block;
+                               position: fixed;
+                               top: 0;
+                               left: 0;
+                               width: 100%;
+                               height: 100%;
+                               background-color: rgba(255,255,255,0.6);
+                            }
+
+                            .%wrapClass%:not(:required) {
+                               font: 0/0 a;
+                               color: transparent;
+                               text-shadow: none;
+                               background-color: rgba(255, 255, 255, 0.5803921568627451);
+                               border: 0;
+                            }
+
+                            .%wrapClass%:not(:required):after {
+                               content: '';
+                               display: block;
+                               font-size: 10px;
+                               width: 1em;
+                               height: 1em;
+                               position:fixed;
+                               top:50%;
+                               left:50%;
+                               margin-top: -0.5em;
+                               margin-left: -0.5em;
+                               -webkit-animation: %spinClass% 1500ms infinite linear;
+                               -moz-animation: %spinClass% 1500ms infinite linear;
+                               -ms-animation: %spinClass% 1500ms infinite linear;
+                               -o-animation: %spinClass% 1500ms infinite linear;
+                               animation: %spinClass% 1500ms infinite linear;
+                               border-radius: 0.5em;
+                               -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                               box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                            }
+
+
+                            @-webkit-keyframes %spinClass% {
+                               0% {
+                                  -webkit-transform: rotate(0deg);
+                                  -moz-transform: rotate(0deg);
+                                  -ms-transform: rotate(0deg);
+                                  -o-transform: rotate(0deg);
+                                  transform: rotate(0deg);
+                               }
+                               100% {
+                                  -webkit-transform: rotate(360deg);
+                                  -moz-transform: rotate(360deg);
+                                  -ms-transform: rotate(360deg);
+                                  -o-transform: rotate(360deg);
+                                  transform: rotate(360deg);
+                               }
+                            }
+                            @-moz-keyframes %spinClass% {
+                               0% {
+                                  -webkit-transform: rotate(0deg);
+                                  -moz-transform: rotate(0deg);
+                                  -ms-transform: rotate(0deg);
+                                  -o-transform: rotate(0deg);
+                                  transform: rotate(0deg);
+                               }
+                               100% {
+                                  -webkit-transform: rotate(360deg);
+                                  -moz-transform: rotate(360deg);
+                                  -ms-transform: rotate(360deg);
+                                  -o-transform: rotate(360deg);
+                                  transform: rotate(360deg);
+                               }
+                            }
+                            @-o-keyframes %spinClass% {
+                               0% {
+                                  -webkit-transform: rotate(0deg);
+                                  -moz-transform: rotate(0deg);
+                                  -ms-transform: rotate(0deg);
+                                  -o-transform: rotate(0deg);
+                                  transform: rotate(0deg);
+                               }
+                               100% {
+                                  -webkit-transform: rotate(360deg);
+                                  -moz-transform: rotate(360deg);
+                                  -ms-transform: rotate(360deg);
+                                  -o-transform: rotate(360deg);
+                                  transform: rotate(360deg);
+                               }
+                            }
+                            @keyframes %spinClass% {
+                               0% {
+                                  -webkit-transform: rotate(0deg);
+                                  -moz-transform: rotate(0deg);
+                                  -ms-transform: rotate(0deg);
+                                  -o-transform: rotate(0deg);
+                                  transform: rotate(0deg);
+                               }
+                               100% {
+                                  -webkit-transform: rotate(360deg);
+                                  -moz-transform: rotate(360deg);
+                                  -ms-transform: rotate(360deg);
+                                  -o-transform: rotate(360deg);
+                                  transform: rotate(360deg);
+                               }
+                            }
+                            </style>
+
+                            */
+            }).replace(/%wrapClass%/g, param['wrapClass']).replace(/%spinClass%/g, param['spinClass']));
+
+            appendHtmlToTarget(param.target, heredoc(function() {
+                    /*
+                                   <div class="%wrapClass%" style="display:none; " id="%spinID%"></div>
+
+                                */
+                })
+                .replace(/%wrapClass%/g, param['wrapClass'])
+                .replace(/%spinID%/g, param['spinID'])
+            );
+
+            return obj;
+
+        });
+    };
+
+})();
