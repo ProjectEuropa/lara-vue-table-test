@@ -7,8 +7,8 @@
             </div>
             <div class="md-form form-group">
                 <select id="teamSearchTags" class="form-control" name="teamSearchTags" v-model="sortSelect">
-                    <option value="new">投稿日時の新しい順</option>
-                    <option value="old">投稿日時の古い順</option>
+                    <option value="desc">投稿日時の新しい順</option>
+                    <option value="asc">投稿日時の古い順</option>
                 </select>
             </div>
             <div class="md-form form-group">
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
         keyword: '',
-        sortSelect: 'new'
+        sortSelect: 'desc'
     };
   },
   methods : {
