@@ -17,5 +17,9 @@ Route::get('/', function () {
 Route::get('/simpleupload', function () {
     return view('upload.index');
 });
+Route::get('/search/{searchtype}', function ($searchtype) {
+    return view('search.index')->with('searchtype', $searchtype);
+});
+
 
 Auth::routes();
