@@ -28,7 +28,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Top</a>
+                                <a class="nav-link" href="{{ url('/')}} ">Top</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Information</a>
@@ -39,10 +39,10 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="">Team Data</a>
+                                        <a href="{{ url('/search/team')}} ">Team Data</a>
                                     </li>
                                     <li>
-                                        <a href="">Match Data</a>
+                                        <a href="{{ url('/search/match')}} ">Match Data</a>
                                     </li>
                                 </ul>
                             </li>

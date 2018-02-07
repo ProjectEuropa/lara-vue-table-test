@@ -5,18 +5,85 @@
 @endsection
 
 @section('content')
-<main class="container">
-    <div class="under-header">
-    <input type="hidden" id="search-type" value="{{ $searchtype == 'team' ?  'team' : 'match' }}">
-        <h2>{{ $searchtype == 'team' ?  'Team' : 'Match' }} Data</h2>
-        <p>{{ $searchtype == 'team' ?  'チーム' : 'マッチ' }}データの検索が可能です。ダウンロードアイコンをクリックするとダウンロードが始まります。</p>
+<main>
+    <div id="main-carousel" class="carousel">
+        <div class="europa-inner">
+            <div class="item active">
+                <img class="img-responsive" src="https://project-europa.herokuapp.com/image/Europa.jpg">
+                <div class="carousel-caption">
+                    <h1>Welcome to Europa</h1>
+                    <p>Carnage Heart EXA 非公式アップローダーEuropaにようこそ</p>
+                    <p>Headerの各種リンク先からお進みください。</p>
+                    <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button"
+                        title="Twitter Tweet Button" src="https://platform.twitter.com/widgets/tweet_button.eaf4b750247dd4d0c4a27df474e7e934.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=https%3A%2F%2Fproject-europa.herokuapp.com%2F&amp;size=l&amp;text=Project%20Europa&amp;time=1513843230478&amp;type=share&amp;url=https%3A%2F%2Fproject-europa.herokuapp.com%2F"
+                        style="position: static; visibility: visible; width: 76px; height: 28px;"></iframe>
+                    <script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script>
+                    <script>
+                        ! function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0],
+                                p = /^http:/.test(d.location) ? 'http' : 'https';
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = p + '://platform.twitter.com/widgets.js';
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, 'script', 'twitter-wjs');
+                    </script>
+
+                    <div class="c-c-japan">This image of copyright belong to
+                        <a href="https://creativecommons.jp/">creative commons JAPAN.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="app">
-        <example-component></example-component>
+
+    <div class="container">
+        <div class="row">
+            <!-- cell -->
+            <div class="col-sm-4">
+                <div class="panel panel-deafult">
+                    <div class="panel-header">検索・ダウンロード機能</div>
+                    <div class="panel-body">
+                        <div class="img-box">
+                            <img src="https://project-europa.herokuapp.com/image/search.png" class="box-img img-responsive">
+                        </div>
+                        <div>
+                            チームデータ・マッチデータを検索してダウンロードが可能です。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-deafult">
+                    <div class="panel-header">アップロード機能</div>
+                    <div class="panel-body">
+                        <div class="img-box">
+                            <img src="https://project-europa.herokuapp.com/image/upload.png" class="box-img img-responsive">
+                        </div>
+                        <div>
+                            チームデータ・マッチデータのアップロードが可能です。ユーザ登録なしでもご利用いただけます。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-deafult">
+                    <div class="panel-header">イベント告知機能</div>
+                    <div class="panel-body">
+                        <div class="img-box">
+                            <img src="https://project-europa.herokuapp.com/image/eventnotice.png" class="box-img img-responsive">
+                        </div>
+                        <div>
+                            イベントの告知が可能です。大会の告知などにご利用ください。ご利用にはユーザ登録が必要です。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
-
-
 @endsection
 
 @section('js')
