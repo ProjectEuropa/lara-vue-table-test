@@ -30643,7 +30643,7 @@ exports = module.exports = __webpack_require__(9)(false);
 
 
 // module
-exports.push([module.i, "\n.table-header .download[data-v-7168fb6a],\n.table-header .owner[data-v-7168fb6a] {\n  width: 100px;\n}\n.table-header .created-at[data-v-7168fb6a] {\n  width: 160px;\n}\n.table-header .delete[data-v-7168fb6a] {\n  width: 200px;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-7168fb6a] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
+exports.push([module.i, "\n.table-header .download[data-v-7168fb6a],\n.table-header .owner[data-v-7168fb6a] {\n  width: 100px;\n}\n.table-header .created-at[data-v-7168fb6a] {\n  width: 160px;\n}\n.table-header .delete[data-v-7168fb6a] {\n  width: 200px;\n}\ndialog[data-v-7168fb6a]:not([open]) {\n  display: none;\n}\ndialog[data-v-7168fb6a] {\n  border: none;\n}\ndialog menu[data-v-7168fb6a] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-7168fb6a] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-7168fb6a] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
 
 // exports
 
@@ -30777,13 +30777,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -30806,7 +30799,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       next_page_url: "",
       prev_page_url: "",
       path: "",
-      seach_type: document.getElementById('search-type').value
+      seach_type: document.getElementById("search-type").value,
+      showModal: false,
+      keyword: "",
+      ordertype: "desc"
     };
   },
   mounted: function mounted() {
@@ -30820,19 +30816,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           end = void 0;
 
       if (this.last_page < this.pageRange) {
-        // ページネーションのrangeよりページ数がすくない場合
         start = 1;
         end = this.last_page;
       } else if (this.current_page < half) {
-        // 左端のページ番号が1になったとき
         start = 1;
         end = start + this.pageRange - 1;
       } else if (this.last_page - half < this.current_page) {
-        // 右端のページ番号が総ページ数になったとき
         end = this.last_page;
         start = end - this.pageRange + 1;
       } else {
-        // activeページを中央にする
         start = this.current_page - half + 1;
         end = this.current_page + half;
       }
@@ -30845,18 +30837,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
-    searchFunction: function searchFunction(keyword, sortSelect) {
-      this.pagenate(this.path + '?ordertype=' + sortSelect);
+    searchFunction: function searchFunction(keyword, ordertype) {
+      this.keyword = keyword;
+      this.ordertype = ordertype;
+      this.pagenate(this.path + "?ordertype=" + this.ordertype + "&keyword=" + this.keyword);
     },
 
     getLinkFile: function getLinkFile(id) {
       return id;
     },
     nl2br: function nl2br(value) {
-      return value !== null ? value.replace(/\n/g, '<br>') : '';
+      return value !== null ? value.replace(/\n/g, "<br>") : "";
     },
     pageSelect: function pageSelect(i) {
-      this.pagenate(this.path + '?page=' + String(i));
+      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.ordertype + "&keyword=" + this.keyword);
     },
     pagenate: function pagenate(url) {
       var _this = this;
@@ -30880,6 +30874,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(res);
         window.scrollTo(0, 0);
       });
+    },
+    openConfirmDialog: function openConfirmDialog(file_name, file_id) {
+      document.getElementById("confirm-dialog").showModal();
+      document.getElementById("delete-file-name").innerText = file_name;
+      document.getElementById("delete-form-id").value = file_id;
+    },
+    dialogClose: function dialogClose() {
+      document.getElementById("confirm-dialog").close();
+    },
+    submitDelete: function submitDelete() {
+      document.getElementById(String(document.getElementById("delete-form-id").value)).submit();
     }
   }
 });
@@ -31006,13 +31011,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       keyword: '',
-      sortSelect: 'desc'
+      ordertype: 'desc'
     };
   },
 
   methods: {
     search: function search() {
-      this.$emit('call-parent-search', this.keyword, this.sortSelect);
+      this.$emit('call-parent-search', this.keyword, this.ordertype);
     }
   }
 });
@@ -31070,8 +31075,8 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.sortSelect,
-                expression: "sortSelect"
+                value: _vm.ordertype,
+                expression: "ordertype"
               }
             ],
             staticClass: "form-control",
@@ -31086,7 +31091,7 @@ var render = function() {
                     var val = "_value" in o ? o._value : o.value
                     return val
                   })
-                _vm.sortSelect = $event.target.multiple
+                _vm.ordertype = $event.target.multiple
                   ? $$selectedVal
                   : $$selectedVal[0]
               }
@@ -31211,10 +31216,62 @@ var render = function() {
                         "form",
                         {
                           staticClass: "form-horizontal",
-                          attrs: { method: "post", action: "" }
+                          attrs: { method: "post", action: "", id: file.id }
                         },
                         [
-                          _vm._m(1, true),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "form-inline" }, [
+                              _c("input", {
+                                staticClass: "input-alternate",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "削除パスワード"
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !("button" in $event) &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    _vm.openConfirmDialog(
+                                      file.file_name,
+                                      file.id
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: { type: "hidden", name: "id" },
+                                domProps: { value: file.id }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-info btn-delete",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.openConfirmDialog(
+                                        file.file_name,
+                                        file.id
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("削除")]
+                              )
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c("input", {
                             attrs: { type: "hidden", name: "_token" },
@@ -31242,7 +31299,13 @@ var render = function() {
                   staticClass: "page-item clearfix d-none d-md-block",
                   on: {
                     click: function($event) {
-                      _vm.pagenate(_vm.first_page_url)
+                      _vm.pagenate(
+                        _vm.first_page_url +
+                          "&ordertype=" +
+                          _vm.ordertype +
+                          "&keyword=" +
+                          _vm.keyword
+                      )
                     }
                   }
                 },
@@ -31271,7 +31334,13 @@ var render = function() {
                       attrs: { "aria-label": "Previous" },
                       on: {
                         click: function($event) {
-                          _vm.pagenate(_vm.prev_page_url)
+                          _vm.pagenate(
+                            _vm.prev_page_url +
+                              "&ordertype=" +
+                              _vm.ordertype +
+                              "&keyword=" +
+                              _vm.keyword
+                          )
                         }
                       }
                     },
@@ -31328,7 +31397,13 @@ var render = function() {
                       attrs: { "aria-label": "Next" },
                       on: {
                         click: function($event) {
-                          _vm.pagenate(_vm.next_page_url)
+                          _vm.pagenate(
+                            _vm.next_page_url +
+                              "&ordertype=" +
+                              _vm.ordertype +
+                              "&keyword=" +
+                              _vm.keyword
+                          )
                         }
                       }
                     },
@@ -31353,7 +31428,13 @@ var render = function() {
                       staticClass: "page-link waves-effect waves-effect",
                       on: {
                         click: function($event) {
-                          _vm.pagenate(_vm.last_page_url)
+                          _vm.pagenate(
+                            _vm.last_page_url +
+                              "&ordertype=" +
+                              _vm.ordertype +
+                              "&keyword=" +
+                              _vm.keyword
+                          )
                         }
                       }
                     },
@@ -31365,7 +31446,48 @@ var render = function() {
             2
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "dialog",
+        {
+          attrs: { id: "confirm-dialog" },
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+            }
+          }
+        },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "hidden", id: "delete-form-id", value: "" }
+          }),
+          _vm._v(" "),
+          _c("menu", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info",
+                attrs: { id: "cancel" },
+                on: { click: _vm.dialogClose }
+              },
+              [_vm._v("キャンセル")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: { click: _vm.submitDelete }
+              },
+              [_vm._v("削除する")]
+            )
+          ])
+        ]
+      )
     ],
     1
   )
@@ -31395,27 +31517,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "form-inline" }, [
-        _c("input", {
-          staticClass: "input-alternate",
-          attrs: { type: "text", placeholder: "削除パスワード" }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "hidden", name: "id", value: "278" }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-info btn-delete",
-            attrs: { type: "submit", value: "SGTSYR1.CHE" }
-          },
-          [_vm._v("削除")]
-        )
-      ])
+    return _c("p", [
+      _vm._v("本当に「"),
+      _c("span", { attrs: { id: "delete-file-name" } }),
+      _vm._v("」を削除しますか？")
     ])
   }
 ]

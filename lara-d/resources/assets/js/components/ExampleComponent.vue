@@ -31,12 +31,12 @@
                         <td>{{ file.file_name }}</td>
                         <td>{{ file.created_at }}</td>
                         <td>
-                            <form method="post" action="" class="form-horizontal" v-if="file.upload_user_id == null || file.upload_user_id == 0">
+                            <form method="post" action="" class="form-horizontal" v-if="file.upload_user_id == null || file.upload_user_id == 0" :id="file.id">
                                 <div class="form-group">
                                     <div class="form-inline">
-                                        <input type="text" class="input-alternate" placeholder="削除パスワード">
-                                        <input type="hidden" name="id" class="form-control" value="278">
-                                        <button type="submit" class="btn btn-info btn-delete" value="SGTSYR1.CHE">削除</button>
+                                        <input type="text" class="input-alternate" placeholder="削除パスワード" @keyup.enter="openConfirmDialog(file.file_name, file.id)">
+                                        <input type="hidden" name="id" class="form-control" :value="file.id">
+                                        <button type="button" class="btn btn-info btn-delete" @click="openConfirmDialog(file.file_name, file.id)">削除</button>
                                     </div>
                                 </div>
                                 <input type="hidden" name="_token" :value="csrf">
@@ -49,11 +49,11 @@
         <div class="d-flex justify-content-left">
             <nav class="my-4 pt-2">
                 <ul class="pagination pagination-circle mb-0">
-                    <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url)">
+                    <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword )">
                         <a class="page-link waves-effect waves-effect">First</a>
                     </li>
                     <li :class="[{disabled: prev_page_url === null}, 'page-item']">
-                        <a :class="[{disabled: prev_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Previous" @click="pagenate(prev_page_url)">
+                        <a :class="[{disabled: prev_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Previous" @click="pagenate(prev_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">
                             <span aria-hidden="true">«</span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -64,17 +64,25 @@
                         <a @click="pageSelect(i)" class="page-link waves-effect waves-effect">{{ i }}</a>
                     </li>
                     <li :class="[{disabled: next_page_url === null}, 'page-item']">
-                        <a :class="[{disabled: next_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Next"  @click="pagenate(next_page_url)">
+                        <a :class="[{disabled: next_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Next"  @click="pagenate(next_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">
                             <span aria-hidden="true">»</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
                     <li class="page-item clearfix d-none d-md-block">
-                        <a class="page-link waves-effect waves-effect" @click="pagenate(last_page_url)">Last</a>
+                        <a class="page-link waves-effect waves-effect" @click="pagenate(last_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">Last</a>
                     </li>
                 </ul>
             </nav>
         </div>
+        <dialog id="confirm-dialog" @click.stop>
+            <p>本当に「<span id="delete-file-name"></span>」を削除しますか？</p>
+            <input type="hidden" id="delete-form-id" value="">
+            <menu>
+              <button id="cancel" class="btn btn-info" @click="dialogClose">キャンセル</button>
+              <button type="button" class="btn btn-danger" @click="submitDelete">削除する</button>
+            </menu>
+        </dialog>
     </div>
 </template>
 
@@ -95,16 +103,19 @@ export default {
       to: 0,
       pageRange: 10,
       csrf: myToken.csrfToken,
-      first_page_url: '',
-      last_page_url: '',
-      next_page_url: '',
-      prev_page_url: '',
-      path: '',
-      seach_type: document.getElementById('search-type').value,
+      first_page_url: "",
+      last_page_url: "",
+      next_page_url: "",
+      prev_page_url: "",
+      path: "",
+      seach_type: document.getElementById("search-type").value,
+      showModal: false,
+      keyword: "",
+      ordertype: "desc"
     };
   },
   mounted() {
-    this.pagenate('/api/search/' + this.seach_type);
+    this.pagenate("/api/search/" + this.seach_type);
   },
   computed: {
     displayPageRange() {
@@ -133,17 +144,19 @@ export default {
     }
   },
   methods: {
-    searchFunction(keyword, sortSelect) {
-      this.pagenate(this.path + '?ordertype=' + sortSelect);
+    searchFunction(keyword, ordertype) {
+      this.keyword = keyword;
+      this.ordertype = ordertype;
+      this.pagenate(this.path + "?ordertype=" + this.ordertype + "&keyword=" + this.keyword);
     },
     getLinkFile: function(id) {
       return id;
     },
     nl2br(value) {
-      return value !== null ? value.replace(/\n/g, '<br>') : '';
+      return value !== null ? value.replace(/\n/g, "<br>") : "";
     },
     pageSelect(i) {
-      this.pagenate(this.path + '?page=' + String(i));
+      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.ordertype + "&keyword=" + this.keyword);
     },
     pagenate(url) {
       const spinHandle = loadingOverlay().activate();
@@ -165,6 +178,17 @@ export default {
         console.log(res);
         window.scrollTo(0, 0);
       });
+    },
+    openConfirmDialog(file_name, file_id) {
+      document.getElementById("confirm-dialog").showModal();
+      document.getElementById("delete-file-name").innerText = file_name;
+      document.getElementById("delete-form-id").value = file_id;
+    },
+    dialogClose() {
+      document.getElementById("confirm-dialog").close();
+    },
+    submitDelete() {
+      document.getElementById(String(document.getElementById("delete-form-id").value)).submit();
     }
   }
 };
@@ -183,7 +207,19 @@ export default {
     width: 200px;
   }
 }
-
+dialog:not([open]) {
+  display: none;
+}
+dialog {
+  border: none;
+  menu {
+    padding: 0;
+    margin: 0;
+  }
+  p {
+    text-align: center;
+  }
+}
 @media screen and (max-width: 767px) {
   table {
     overflow: auto;

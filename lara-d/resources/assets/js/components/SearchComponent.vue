@@ -6,7 +6,7 @@
                 <input type="text" class="input-alternate" @keyup.enter="search" placeholder="" v-model="keyword">
             </div>
             <div class="md-form form-group">
-                <select id="teamSearchTags" class="form-control" name="teamSearchTags" v-model="sortSelect">
+                <select id="ordertype" class="form-control" name="ordertype" v-model="ordertype">
                     <option value="desc">投稿日時の新しい順</option>
                     <option value="asc">投稿日時の古い順</option>
                 </select>
@@ -23,12 +23,12 @@ export default {
   data() {
     return {
         keyword: '',
-        sortSelect: 'desc'
+        ordertype: 'desc'
     };
   },
   methods : {
     search(){
-        this.$emit('call-parent-search', this.keyword, this.sortSelect);
+        this.$emit('call-parent-search', this.keyword, this.ordertype);
     }
   },
 };

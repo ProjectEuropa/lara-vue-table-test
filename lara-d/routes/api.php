@@ -30,5 +30,9 @@ Route::middleware('api')->get('/search/{searchtype}', function (Request $request
         $files = $files->orderby('id', 'desc');
     }
 
+    if ($request->keyword) {
+        $files = $files->where('file_comment', 'LIKE', '%'.$request->keyword.'%');
+    }
+
     return $files->paginate(10);
 });
