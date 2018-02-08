@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-@section('css')
-@endsection
-
 @section('content')
 <main class="container">
     <div class="under-header">
@@ -14,8 +11,6 @@
         <example-component></example-component>
     </div>
 </main>
-
-
 @endsection
 
 @section('js')

@@ -30792,7 +30792,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       total: 0,
       from: 0,
       to: 0,
-      pageRange: 10,
+      page_range: 10,
       csrf: myToken.csrfToken,
       first_page_url: "",
       last_page_url: "",
@@ -30800,9 +30800,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       prev_page_url: "",
       path: "",
       seach_type: document.getElementById("search-type").value,
-      showModal: false,
       keyword: "",
-      ordertype: "desc"
+      order_type: "desc"
     };
   },
   mounted: function mounted() {
@@ -30811,19 +30810,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     displayPageRange: function displayPageRange() {
-      var half = Math.ceil(this.pageRange / 2);
+      var half = Math.ceil(this.page_range / 2);
       var start = void 0,
           end = void 0;
 
-      if (this.last_page < this.pageRange) {
+      if (this.last_page < this.page_range) {
         start = 1;
         end = this.last_page;
       } else if (this.current_page < half) {
         start = 1;
-        end = start + this.pageRange - 1;
+        end = start + this.page_range - 1;
       } else if (this.last_page - half < this.current_page) {
         end = this.last_page;
-        start = end - this.pageRange + 1;
+        start = end - this.page_range + 1;
       } else {
         start = this.current_page - half + 1;
         end = this.current_page + half;
@@ -30837,10 +30836,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
-    searchFunction: function searchFunction(keyword, ordertype) {
+    searchFunction: function searchFunction(keyword, order_type) {
       this.keyword = keyword;
-      this.ordertype = ordertype;
-      this.pagenate(this.path + "?ordertype=" + this.ordertype + "&keyword=" + this.keyword);
+      this.order_type = order_type;
+      this.pagenate(this.path + "?ordertype=" + this.order_type + "&keyword=" + this.keyword);
     },
 
     getLinkFile: function getLinkFile(id) {
@@ -30850,7 +30849,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return value !== null ? value.replace(/\n/g, "<br>") : "";
     },
     pageSelect: function pageSelect(i) {
-      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.ordertype + "&keyword=" + this.keyword);
+      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.order_type + "&keyword=" + this.keyword);
     },
     pagenate: function pagenate(url) {
       var _this = this;
@@ -31011,13 +31010,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       keyword: '',
-      ordertype: 'desc'
+      order_type: 'desc'
     };
   },
 
   methods: {
     search: function search() {
-      this.$emit('call-parent-search', this.keyword, this.ordertype);
+      this.$emit('call-parent-search', this.keyword, this.order_type);
     }
   }
 });
@@ -31075,12 +31074,12 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.ordertype,
-                expression: "ordertype"
+                value: _vm.order_type,
+                expression: "order_type"
               }
             ],
             staticClass: "form-control",
-            attrs: { id: "teamSearchTags", name: "teamSearchTags" },
+            attrs: { id: "ordertype", name: "ordertype" },
             on: {
               change: function($event) {
                 var $$selectedVal = Array.prototype.filter
@@ -31091,7 +31090,7 @@ var render = function() {
                     var val = "_value" in o ? o._value : o.value
                     return val
                   })
-                _vm.ordertype = $event.target.multiple
+                _vm.order_type = $event.target.multiple
                   ? $$selectedVal
                   : $$selectedVal[0]
               }
@@ -31302,7 +31301,7 @@ var render = function() {
                       _vm.pagenate(
                         _vm.first_page_url +
                           "&ordertype=" +
-                          _vm.ordertype +
+                          _vm.order_type +
                           "&keyword=" +
                           _vm.keyword
                       )
@@ -31337,7 +31336,7 @@ var render = function() {
                           _vm.pagenate(
                             _vm.prev_page_url +
                               "&ordertype=" +
-                              _vm.ordertype +
+                              _vm.order_type +
                               "&keyword=" +
                               _vm.keyword
                           )
@@ -31400,7 +31399,7 @@ var render = function() {
                           _vm.pagenate(
                             _vm.next_page_url +
                               "&ordertype=" +
-                              _vm.ordertype +
+                              _vm.order_type +
                               "&keyword=" +
                               _vm.keyword
                           )
@@ -31431,7 +31430,7 @@ var render = function() {
                           _vm.pagenate(
                             _vm.last_page_url +
                               "&ordertype=" +
-                              _vm.ordertype +
+                              _vm.order_type +
                               "&keyword=" +
                               _vm.keyword
                           )

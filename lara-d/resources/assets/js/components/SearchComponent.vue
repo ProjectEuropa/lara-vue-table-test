@@ -6,7 +6,7 @@
                 <input type="text" class="input-alternate" @keyup.enter="search" placeholder="" v-model="keyword">
             </div>
             <div class="md-form form-group">
-                <select id="ordertype" class="form-control" name="ordertype" v-model="ordertype">
+                <select id="ordertype" class="form-control" name="ordertype" v-model="order_type">
                     <option value="desc">投稿日時の新しい順</option>
                     <option value="asc">投稿日時の古い順</option>
                 </select>
@@ -23,12 +23,12 @@ export default {
   data() {
     return {
         keyword: '',
-        ordertype: 'desc'
+        order_type: 'desc'
     };
   },
   methods : {
     search(){
-        this.$emit('call-parent-search', this.keyword, this.ordertype);
+        this.$emit('call-parent-search', this.keyword, this.order_type);
     }
   },
 };

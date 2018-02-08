@@ -49,11 +49,11 @@
         <div class="d-flex justify-content-left">
             <nav class="my-4 pt-2">
                 <ul class="pagination pagination-circle mb-0">
-                    <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword )">
+                    <li class="page-item clearfix d-none d-md-block" @click="pagenate(first_page_url + '&ordertype=' + order_type + '&keyword=' + keyword )">
                         <a class="page-link waves-effect waves-effect">First</a>
                     </li>
                     <li :class="[{disabled: prev_page_url === null}, 'page-item']">
-                        <a :class="[{disabled: prev_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Previous" @click="pagenate(prev_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">
+                        <a :class="[{disabled: prev_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Previous" @click="pagenate(prev_page_url + '&ordertype=' + order_type + '&keyword=' + keyword)">
                             <span aria-hidden="true">«</span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -64,13 +64,13 @@
                         <a @click="pageSelect(i)" class="page-link waves-effect waves-effect">{{ i }}</a>
                     </li>
                     <li :class="[{disabled: next_page_url === null}, 'page-item']">
-                        <a :class="[{disabled: next_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Next"  @click="pagenate(next_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">
+                        <a :class="[{disabled: next_page_url === null}, 'page-link waves-effect waves-effect']" aria-label="Next"  @click="pagenate(next_page_url + '&ordertype=' + order_type + '&keyword=' + keyword)">
                             <span aria-hidden="true">»</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
                     <li class="page-item clearfix d-none d-md-block">
-                        <a class="page-link waves-effect waves-effect" @click="pagenate(last_page_url + '&ordertype=' + ordertype + '&keyword=' + keyword)">Last</a>
+                        <a class="page-link waves-effect waves-effect" @click="pagenate(last_page_url + '&ordertype=' + order_type + '&keyword=' + keyword)">Last</a>
                     </li>
                 </ul>
             </nav>
@@ -101,7 +101,7 @@ export default {
       total: 0,
       from: 0,
       to: 0,
-      pageRange: 10,
+      page_range: 10,
       csrf: myToken.csrfToken,
       first_page_url: "",
       last_page_url: "",
@@ -109,9 +109,8 @@ export default {
       prev_page_url: "",
       path: "",
       seach_type: document.getElementById("search-type").value,
-      showModal: false,
       keyword: "",
-      ordertype: "desc"
+      order_type: "desc"
     };
   },
   mounted() {
@@ -119,18 +118,18 @@ export default {
   },
   computed: {
     displayPageRange() {
-      const half = Math.ceil(this.pageRange / 2);
+      const half = Math.ceil(this.page_range / 2);
       let start, end;
 
-      if (this.last_page < this.pageRange) {
+      if (this.last_page < this.page_range) {
         start = 1;
         end = this.last_page;
       } else if (this.current_page < half) {
         start = 1;
-        end = start + this.pageRange - 1;
+        end = start + this.page_range - 1;
       } else if (this.last_page - half < this.current_page) {
         end = this.last_page;
-        start = end - this.pageRange + 1;
+        start = end - this.page_range + 1;
       } else {
         start = this.current_page - half + 1;
         end = this.current_page + half;
@@ -144,10 +143,10 @@ export default {
     }
   },
   methods: {
-    searchFunction(keyword, ordertype) {
+    searchFunction(keyword, order_type) {
       this.keyword = keyword;
-      this.ordertype = ordertype;
-      this.pagenate(this.path + "?ordertype=" + this.ordertype + "&keyword=" + this.keyword);
+      this.order_type = order_type;
+      this.pagenate(this.path + "?ordertype=" + this.order_type + "&keyword=" + this.keyword);
     },
     getLinkFile: function(id) {
       return id;
@@ -156,7 +155,7 @@ export default {
       return value !== null ? value.replace(/\n/g, "<br>") : "";
     },
     pageSelect(i) {
-      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.ordertype + "&keyword=" + this.keyword);
+      this.pagenate(this.path + "?page=" + String(i) + "&ordertype=" + this.order_type + "&keyword=" + this.keyword);
     },
     pagenate(url) {
       const spinHandle = loadingOverlay().activate();

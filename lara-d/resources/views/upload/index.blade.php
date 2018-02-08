@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <div class="container main">
+    <div class="container">
         <div class="under-header">
             <h2>Simple Upload</h2>
             <p>ユーザー登録処理をせずにチームデータ・マッチデータのアップロードが可能です。</p>
@@ -19,7 +19,7 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label for="teamOwnerName">オーナー名:</label>
-                                    <input type="text" name="teamOwnerName" class="form-control input-alternate" id="teamOwnerName" value="" style="padding-left: 0;">
+                                    <input type="text" name="teamOwnerName" class="form-control input-alternate" id="teamOwnerName" value="" style="padding: 0;">
                                 </div>
                                 <div class="form-group">
                                     <label for="teamComment">コメント:</label>
@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label for="teamDeletePassWord">削除パスワード:</label>
                                     <input type="text" name="teamDeletePassWord" class="form-control input-alternate" rows="5" id="teamDeletePassWord" value=""
-                                        style="padding-left: 0;">
+                                        style="padding: 0;">
                                 </div>
                                 <div class="form-group">
                                     <label for="teamSearchTags">検索タグ</label>
@@ -63,12 +63,12 @@
                         マッチデータアップロード
                     </div>
                     <div class="card-body">
-                        <form accept-charset="UTF-8" role="form" method="post" action="https://project-europa.herokuapp.com/simpleupload/matchupload"
+                        <form accept-charset="UTF-8" role="form" method="post" action=""
                             enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
                                     <label for="matchOwnerName">オーナー名:</label>
-                                    <input type="text" name="matchOwnerName" class="form-control input-alternate" id="matchOwnerName" value="" style="padding-left: 0;">
+                                    <input type="text" name="matchOwnerName" class="form-control input-alternate" id="matchOwnerName" value="" style="padding: 0;">
                                 </div>
                                 <div class="form-group">
                                     <label for="matchComment">コメント:</label>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="matchDeletePassWord">削除パスワード:</label>
-                                    <input type="text" name="matchDeletePassWord" class="form-control input-alternate" rows="5" id="matchDeletePassWord" value="" style="padding-left: 0;">
+                                    <input type="text" name="matchDeletePassWord" class="form-control input-alternate" rows="5" id="matchDeletePassWord" value="" style="padding: 0;">
                                 </div>
                                 <div class="form-group">
                                     <label for="matchSearchTags">検索タグ</label>
