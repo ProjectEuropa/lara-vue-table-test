@@ -21,7 +21,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/material-js/popper.min.js',
         'resources/assets/material-js/prism.js',
         'resources/assets/material-js/loadingOverlay.js',
-        'resources/assets/material-js/magicsuggest-conf.js'
+        'resources/assets/material-js/magicsuggest-conf.js',
+        'resources/assets/material-js/notify.min.js',
     ], 'public/js/material.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .styles([

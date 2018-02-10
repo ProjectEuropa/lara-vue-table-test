@@ -30800,13 +30800,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       next_page_url: "",
       prev_page_url: "",
       path: "",
-      seach_type: document.getElementById("search-type").value,
+      search_type: document.getElementById("search-type").value,
       keyword: "",
       order_type: "desc"
     };
   },
   mounted: function mounted() {
-    this.pagenate("/api/search/" + this.seach_type);
+    this.pagenate("/api/search/" + this.search_type);
   },
 
   computed: {
@@ -31211,12 +31211,16 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(file.created_at))]),
                 _vm._v(" "),
                 _c("td", [
-                  file.upload_user_id == null || file.upload_user_id == 0
+                  file.upload_type == "2"
                     ? _c(
                         "form",
                         {
                           staticClass: "form-horizontal",
-                          attrs: { method: "post", action: "", id: file.id }
+                          attrs: {
+                            method: "post",
+                            action: "/search/" + _vm.search_type + "/delete",
+                            id: file.id
+                          }
                         },
                         [
                           _c("div", { staticClass: "form-group" }, [
@@ -31224,7 +31228,8 @@ var render = function() {
                               _c("input", {
                                 staticClass: "input-alternate",
                                 attrs: {
-                                  type: "text",
+                                  type: "password",
+                                  name: "deletePassword",
                                   placeholder: "削除パスワード"
                                 },
                                 on: {
