@@ -32,7 +32,7 @@ class UploadRequest extends FormRequest
                 //'url'のなかに'simpleupload'が含まれている場合
                 return [
                     'teamOwnerName' => 'required|max:12',
-                    'teamComment' => 'required|max:100',
+                    'teamComment' => 'required|max:200',
                     'teamDeletePassWord' => 'required|max:12',
                     'teamFile' => 'required|che_file|max:24',
                     'teamSearchTags.*' => 'max:20'
@@ -41,7 +41,7 @@ class UploadRequest extends FormRequest
                 //'url'のなかに'simpleupload'が含まれてない場合（通常アップロード）
                 return [
                     'teamOwnerName' => 'required|max:12',
-                    'teamComment' => 'required|max:100',
+                    'teamComment' => 'required|max:200',
                     'teamFile' => 'required|che_file|max:24',
                     'teamSearchTags.*' => 'max:20'
                 ];
@@ -52,7 +52,7 @@ class UploadRequest extends FormRequest
                 //'url'のなかに'simpleupload'が含まれている場合
                 return [
                     'matchOwnerName' => 'required|max:12',
-                    'matchComment' => 'required|max:100',
+                    'matchComment' => 'required|max:200',
                     'matchDeletePassWord' => 'required|max:12',
                     'matchFile' => 'required|no_che_file|max:260',
                     'matchSearchTags.*' => 'max:20'
@@ -61,13 +61,11 @@ class UploadRequest extends FormRequest
                 //'url'のなかに'simpleupload'が含まれてない場合（通常アップロード）
                 return [
                     'matchOwnerName' => 'required|max:12',
-                    'matchComment' => 'required|max:100',
+                    'matchComment' => 'required|max:200',
                     'matchFile' => 'required|no_che_file|max:260',
                     'matchSearchTags.*' => 'max:20'
                 ];
             }
-            
-
         }
     }
 }
