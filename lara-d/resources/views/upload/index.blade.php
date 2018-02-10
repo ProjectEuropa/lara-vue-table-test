@@ -8,6 +8,9 @@
             <p>ユーザー登録処理をせずにチームデータ・マッチデータのアップロードが可能です。</p>
         </div>
 
+        @include('common.message')
+        @include('common.validation')
+
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="card">
@@ -15,7 +18,7 @@
                         チームデータアップロード
                     </div>
                     <div class="card-body">
-                        <form accept-charset="UTF-8" role="form" method="post" action="" enctype="multipart/form-data">
+                        <form accept-charset="UTF-8" role="form" method="post" action="{{ url('team/simpleupload') }}" enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
                                     <label for="teamOwnerName">オーナー名:</label>
@@ -31,23 +34,23 @@
                                         style="padding: 0;">
                                 </div>
                                 <div class="form-group">
-                                    <label for="teamSearchTags">検索タグ</label>
+                                    <label for="teamSearchTags">検索タグ:</label>
                                     <select id="teamSearchTags" class="form-control" name="teamSearchTags">
                                         <option value="大会ゲスト許可">大会ゲスト許可</option>
                                         <option value="フリーOKE">フリーOKE</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input id="teamfile" type="file" style="display:none">
+                                    <input id="teamfile" type="file" style="display:none" name="teamFile">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-info" onclick="$('input[id=teamfile]').click();">チームファイル</button>
                                         </span>
-                                        <input type="text" id="teamCover" name="teamFile" class="form-control" placeholder="select file...">
+                                        <input type="text" id="teamCover" class="form-control" placeholder="select file...">
                                     </div>
                                     <p class="help-block">CHEチームデータが選択可能です</p>
                                 </div>
-                                <input type="hidden" name="_token" value="XIGNcCDHjdOGzZvM6taTIWiZ9eJchGq1IZuxOVg4">
+                                {{ csrf_field() }}
                                 <button type="submit" class="btn btn-block puerto-color">チームデータアップロード</button>
                             </fieldset>
                         </form>
@@ -63,7 +66,7 @@
                         マッチデータアップロード
                     </div>
                     <div class="card-body">
-                        <form accept-charset="UTF-8" role="form" method="post" action=""
+                        <form accept-charset="UTF-8" role="form" method="post" action="{{ url('match/simpleupload') }}"
                             enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
@@ -79,7 +82,7 @@
                                     <input type="text" name="matchDeletePassWord" class="form-control input-alternate" rows="5" id="matchDeletePassWord" value="" style="padding: 0;">
                                 </div>
                                 <div class="form-group">
-                                    <label for="matchSearchTags">検索タグ</label>
+                                    <label for="matchSearchTags">検索タグ:</label>
                                     <select id="matchSearchTags" class="form-control" name="matchSearchTags">
                                         <option value="ハーフリーグ">ハーフリーグ</option>
                                         <option value="フルリーグ">フルリーグ</option>
@@ -88,16 +91,16 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                        <input id="matchfile" type="file" style="display:none">
+                                        <input id="matchfile" type="file" style="display:none" name="matchFile">
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-info" onclick="$('input[id=matchfile]').click();">マッチファイル</button>
                                             </span>
-                                            <input type="text" id="matchCover" name="matchFile" class="form-control" placeholder="select file...">
+                                            <input type="text" id="matchCover" class="form-control" placeholder="select file...">
                                         </div>
                                         <p class="help-block">CHEマッチデータが選択可能です</p>
                                 </div>
-                                <input type="hidden" name="_token" value="XIGNcCDHjdOGzZvM6taTIWiZ9eJchGq1IZuxOVg4">
+                                {{ csrf_field() }}
                                 <button type="submit" class="btn btn-block downy-color">マッチデータアップロード</button>
                             </fieldset>
                         </form>
@@ -119,5 +122,4 @@
         $('#matchCover').val($(this).val());
     });
 </script>
-<script type="text/javascript" src="https://project-europa.herokuapp.com/js/magicsuggest-conf.js"></script>
 @endsection
