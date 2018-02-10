@@ -9,7 +9,7 @@
     <div id="main-carousel" class="carousel">
         <div class="europa-inner">
             <div class="item active">
-                <img class="img-responsive" src="https://project-europa.herokuapp.com/image/Europa.jpg">
+                <img class="img-responsive" src="{{ asset('image/Europa.jpg') }}">
                 <div class="carousel-caption">
                     <h1>Welcome to Europa</h1>
                     <p>Carnage Heart EXA 非公式アップローダーEuropaにようこそ</p>
