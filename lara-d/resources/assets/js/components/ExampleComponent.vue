@@ -31,10 +31,10 @@
                         <td>{{ file.file_name }}</td>
                         <td>{{ file.created_at }}</td>
                         <td>
-                            <form method="post" action="" class="form-horizontal" v-if="file.upload_user_id == null || file.upload_user_id == 0" :id="file.id">
+                            <form method="post" :action="'/search/' + search_type + '/delete'" class="form-horizontal" v-if="file.upload_type == '2'" :id="file.id">
                                 <div class="form-group">
                                     <div class="form-inline">
-                                        <input type="text" class="input-alternate" placeholder="削除パスワード" @keyup.enter="openConfirmDialog(file.file_name, file.id)">
+                                        <input type="password" class="input-alternate" name="deletePassword" placeholder="削除パスワード" @keyup.enter="openConfirmDialog(file.file_name, file.id)">
                                         <input type="hidden" name="id" class="form-control" :value="file.id">
                                         <button type="button" class="btn btn-info btn-delete" @click="openConfirmDialog(file.file_name, file.id)">削除</button>
                                     </div>
@@ -109,13 +109,13 @@ export default {
       next_page_url: "",
       prev_page_url: "",
       path: "",
-      seach_type: document.getElementById("search-type").value,
+      search_type: document.getElementById("search-type").value,
       keyword: "",
       order_type: "desc"
     };
   },
   mounted() {
-    this.pagenate("/api/search/" + this.seach_type);
+    this.pagenate("/api/search/" + this.search_type);
   },
   computed: {
     displayPageRange() {

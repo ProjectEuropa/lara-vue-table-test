@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('api')->get('/search/{searchtype}', function (Request $request, $searchtype) {
 
     $files = DB::table('files')
-            ->select('id', 'upload_owner_name', 'file_name', 'file_comment', 'created_at', 'upload_user_id', 'search_tag1', 'search_tag2', 'search_tag3', 'search_tag4');
+            ->select('id', 'upload_owner_name', 'file_name', 'file_comment', 'created_at', 'upload_user_id', 'upload_type',  'search_tag1', 'search_tag2', 'search_tag3', 'search_tag4');
 
     if ($searchtype == 'team') {
         $files = $files->where('data_type', '=', '1');

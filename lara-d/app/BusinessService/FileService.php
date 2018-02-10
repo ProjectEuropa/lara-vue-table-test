@@ -14,8 +14,7 @@ class FileService {
     /**
      * ファイルデータ登録処理
      * @param Request リクエスト
-     * @param  bool  true場合チーム falseの場合マッチデータ
-     * @param  bool  true通常アップロード場合チーム falseの場合簡易アップロード
+     * @param  array ['isTeam']  true場合チーム falseの場合マッチデータ ['isNormalUpdate']true通常アップロード場合チーム falseの場合簡易アップロード
      * @return void
      */
     public function registerFileData(Request $request, array $arrayIsTeamOrNormarUpdate) {
@@ -94,5 +93,18 @@ class FileService {
         $stmt->execute();
         // 切断
         unset($db);
+    }
+
+    /**
+     * 検索画面からのファイル削除
+     * @param Request リクエスト
+     * @return int $deleteCount 削除実行レコード数
+     */
+    public function deleteSearchFile(Request $request) : int {
+        //指定したファイルとアップロードユーザIDを対象として削除
+        return DB::table('files')
+                ->where('id', '=', $request->input('id'))
+                ->where('delete_password', '=', $request->input('deletePassword') === null ?  '' : $request->input('deletePassword'))
+                ->delete();
     }
 }

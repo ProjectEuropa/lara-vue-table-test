@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\BusinessService\FileService;
 
 class SearchController extends Controller
 {
+
+    private $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     /**
      * 
@@ -25,7 +33,8 @@ class SearchController extends Controller
      * @param  id  URL：指定したファイルのid
      * @return response DBに登録済みのバイナリデータ
      */
-    public function download($id) {
+    public function download($id) 
+    {
 
         $file = DB::table('files')
                 ->select('file_name', 'file_data')
@@ -43,5 +52,29 @@ class SearchController extends Controller
             'Content-Type: application/CHE',
         );
         return response()->download($cheData, $title, $headers);
+    }
+
+    /**
+     * 
+     *
+     * @return 
+     */
+    public function delete(Request $request, $searchType)
+    {
+        
+        $result = DB::transaction(function () use ($request) {
+            $numDeleteCount = $this->fileService->deleteSearchFile($request);
+            if ($numDeleteCount >= 2) {
+                throw new Exception;
+            } else {
+                return $numDeleteCount;
+            }
+        });
+
+        if ($result == 0) {
+            return redirect('/search/'.$searchType)->with('error_message', 'データの削除に失敗しました');
+        } else {
+            return redirect('/search/'.$searchType)->with('message', 'データの削除が完了しました');
+        }
     }
 }

@@ -25,5 +25,7 @@ Route::post('/match/simpleupload', 'UploadController@matchSimpleUpload');
 Route::get('/search/{searchType}', 'SearchController@index');
 // ダウンロード（チーム・マッチ共用）
 Route::get('/search/download/{id}', 'SearchController@download');
+// 削除（チーム・マッチ共用）
+Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 
 Auth::routes();

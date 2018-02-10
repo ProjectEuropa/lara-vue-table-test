@@ -8,7 +8,6 @@
             <p>ユーザー登録処理をせずにチームデータ・マッチデータのアップロードが可能です。</p>
         </div>
 
-        @include('common.message')
         @include('common.validation')
 
         <div class="row">
@@ -122,4 +121,5 @@
         $('#matchCover').val($(this).val());
     });
 </script>
+@include('common.message')
 @endsection

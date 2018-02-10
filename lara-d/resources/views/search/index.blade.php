@@ -15,4 +15,5 @@
 
 @section('js')
 <script src="{{ asset('js/app.js') }}"></script>
+@include('common.message')
 @endsection
