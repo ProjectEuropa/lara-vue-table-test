@@ -30777,6 +30777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -30843,7 +30844,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     getLinkFile: function getLinkFile(id) {
-      return id;
+      return "/search/download/" + id;
     },
     nl2br: function nl2br(value) {
       return value !== null ? value.replace(/\n/g, "<br>") : "";
@@ -31275,6 +31276,14 @@ var render = function() {
                           _c("input", {
                             attrs: { type: "hidden", name: "_token" },
                             domProps: { value: _vm.csrf }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: {
+                              name: "_method",
+                              type: "hidden",
+                              value: "DELETE"
+                            }
                           })
                         ]
                       )

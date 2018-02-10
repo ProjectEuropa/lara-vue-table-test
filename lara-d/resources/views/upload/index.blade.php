@@ -57,7 +57,7 @@
         </div>
 
         <div class="row" style="margin-top: 30px;">
-            <div class="col-md-12 col-md-offset-0">
+            <div class="col-md-12 col-md-offset-0" style="margin-bottom: 20px;">
                 <div class="card">
                     <div class="card-header downy-color lighten-1 white-text text-center">
                         マッチデータアップロード

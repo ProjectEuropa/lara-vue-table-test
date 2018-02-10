@@ -40,6 +40,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="_token" :value="csrf">
+                                <input name="_method" type="hidden" value="DELETE">
                             </form>
                         </td>
                     </tr>
@@ -149,7 +150,7 @@ export default {
       this.pagenate(this.path + "?ordertype=" + this.order_type + "&keyword=" + this.keyword);
     },
     getLinkFile: function(id) {
-      return id;
+      return "/search/download/" + id;
     },
     nl2br(value) {
       return value !== null ? value.replace(/\n/g, "<br>") : "";

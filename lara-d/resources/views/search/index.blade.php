@@ -3,9 +3,9 @@
 @section('content')
 <main class="container">
     <div class="under-header">
-    <input type="hidden" id="search-type" value="{{ $searchtype == 'team' ?  'team' : 'match' }}">
-        <h2>{{ $searchtype == 'team' ?  'Team' : 'Match' }} Data</h2>
-        <p>{{ $searchtype == 'team' ?  'チーム' : 'マッチ' }}データの検索が可能です。ダウンロードアイコンをクリックするとダウンロードが始まります。</p>
+    <input type="hidden" id="search-type" value="{{ $searchType == 'team' ?  'team' : 'match' }}">
+        <h2>{{ $searchType == 'team' ?  'Team' : 'Match' }} Data</h2>
+        <p>{{ $searchType == 'team' ?  'チーム' : 'マッチ' }}データの検索が可能です。ダウンロードアイコンをクリックするとダウンロードが始まります。</p>
     </div>
     <div id="app">
         <example-component></example-component>

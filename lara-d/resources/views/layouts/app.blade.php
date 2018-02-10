@@ -39,10 +39,10 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ url('/search/team')}} ">Team Data</a>
+                                        <a href="{{ url('/search/team') }}">Team Data</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/search/match')}} ">Match Data</a>
+                                        <a href="{{ url('/search/match') }}">Match Data</a>
                                     </li>
                                 </ul>
                             </li>
@@ -60,7 +60,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Simple Upload</a>
+                                <a class="nav-link" href="{{ url('/simpleupload') }}">Simple Upload</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Video</a>
