@@ -123,7 +123,13 @@ textarea {
 .puerto-color {
     background-color: #5EBABA;
     font-weight: bold;
+    border: #5EBABA;
 }
+a.card-link {
+    display: block;
+    color: #fff;
+}
+
 .downy-color {
     background-color: #79D1B0;
     font-weight: bold;
