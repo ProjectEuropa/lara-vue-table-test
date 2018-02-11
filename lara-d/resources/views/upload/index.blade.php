@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="teamComment">コメント:</label>
-                                    <textarea name="teamComment" class="form-control input-alternate" rows="10" id="teamComment" style="padding: 4em;"></textarea>
+                                    <textarea name="teamComment" class="form-control input-alternate" rows="10" id="teamComment" style="padding-bottom: 10em;"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="teamDeletePassWord">削除パスワード:</label>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="matchComment">コメント:</label>
-                                    <textarea name="matchComment" class="form-control input-alternate" rows="5" id="matchComment" style="padding: 4em;"></textarea>
+                                    <textarea name="matchComment" class="form-control input-alternate" rows="5" id="matchComment" style="padding-bottom: 10em;"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="matchDeletePassWord">削除パスワード:</label>
