@@ -20,10 +20,12 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header puerto-color white-text text-center">
-                    <a href="{{ $event->event_reference_url }}" class="card-link" >{{ $event->event_name }}</a>
+                    <a href="{{ $event->event_reference_url }}" class="card-link">{{ $event->event_name }}</a>
                 </div>
                 <div class="card-body">
+                    @if ($event->event_type != '2')
                     <h4 class="card-title">受付期間:{{ $event->event_closing_day }} まで</h4>
+                    @endif
                     <p class="card-text">{!! nl2br(e($event->event_details)) !!}</p>
                 </div>
                 <div class="card-footer text-muted puerto-color white-text text-center">
