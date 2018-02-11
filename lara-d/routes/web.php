@@ -28,4 +28,7 @@ Route::get('/search/download/{id}', 'SearchController@download');
 // 削除（チーム・マッチ共用）
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 
+//インフォメーション
+Route::get('/information', 'InformationController@index');
+
 Auth::routes();

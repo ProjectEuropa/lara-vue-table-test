@@ -31,7 +31,7 @@
                                 <a class="nav-link" href="{{ url('/')}} ">Top</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Information</a>
+                                <a class="nav-link" href="{{ url('/information')}} ">Information</a>
                             </li>
                             <li class="dropdown nav-item">
                                 <a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-expanded="false">
