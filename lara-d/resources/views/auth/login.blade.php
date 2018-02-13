@@ -1,69 +1,67 @@
 @extends('layouts.app')
 
+@section('css')
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+<main>
+    <div class="container">
+        <div class="under-header">
+            <h2>Login</h2>
+            <p>登録ユーザー情報およびTwitterまたはGoogleアカウントでのログインが有効です。</p>
+        </div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+        @include('common.validation')
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="card">
+                    <div class="card-header lighten-1 white-text info-color text-center">
+                        ユーザー情報入力
+                    </div>
+                    <div class="card-body">
+                        <form role="form" method="post" action="{{ url('/login') }}">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="email">メールアドレス:</label>
+                                    <input type="email" class="form-control input-alternate" name="email" value="{{ old('email') }}" style="padding: 0;">
                                 </div>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label for="password">パスワード:</label>
+                                    <input type="password" class="form-control input-alternate" name="password" style="padding: 0;">
+                                </div>
+                                <div class="pure-controls">
 
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
+                                <label for="remember" class="pure-checkbox">
+                                    <input id="remember" type="checkbox" name="remember"
+                                    {!! old('remember') ? 'checked="checked"' : '' !!} > 継続ログイン
+                                </label>
+                                <a class="pure-button" href="{!! url('/password/email') !!}">
+                                    パスワードリセット
                                 </a>
-                            </div>
-                        </div>
-                    </form>
+                                </div>
+                            
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-block btn-info">ログイン</button>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-info btn-tw"  href="{{ url('/auth/twitter') }}">
+                <span class="fa fa-twitter"></span> Login with Twitter
+            </a>
+            <a class="btn btn-danger btn-gplus"  href="{{ url('/auth/google') }}">
+                <span class="fa fa-google-plus"></span> Login with Google
+            </a>
+        </div>
     </div>
-</div>
+</main>
+@endsection
+
+@section('js')
+    @include('common.message')
 @endsection
