@@ -1,77 +1,55 @@
 @extends('layouts.app')
 
+{{-- css読み込みフォーム --}}
+
+ 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+<main>
+    <div class="container">
+        <div class="under-header">
+            <h2>Register</h2>
+            <p>ユーザー登録処理が可能です。</p>
+        </div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
+        @include('common.validation')
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="card">
+                    <div class="card-header lighten-1 white-text info-color text-center">
+                        ユーザー情報入力
+                    </div>
+                    <div class="card-body">
+                        <form role="form" method="post" action="{{ url('/register') }}" style="padding: 0;">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="name">名前:</label>
+                                    <input type="text" class="form-control input-alternate" name="name" value="{{ old('name') }}" style="padding: 0;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">メールアドレス:</label>
+                                    <input type="email" class="form-control input-alternate" name="email" value="{{ old('email') }}" style="padding: 0;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">パスワード:</label>
+                                    <input type="password" class="form-control input-alternate" name="password" style="padding: 0;">
+                                </div>                           
+                                <div class="form-group">
+                                    <label for="password_confirmation">パスワード再確認:</label>
+                                    <input type="password" class="form-control input-alternate" name="password_confirmation" style="padding: 0;">
+                                </div>
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-block btn-info">登録</button>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
+@endsection
+
+@section('js')
+@include('common.message')
 @endsection
