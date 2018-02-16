@@ -4,8 +4,8 @@
 <main>
     <div class="container">
         <div class="under-header">
-            <h2>Simple Upload</h2>
-            <p>ユーザー登録処理をせずにチームデータ・マッチデータのアップロードが可能です。</p>
+            <h2>{{ strpos(Request::url(), 'simpleupload') !== false ? 'Simple ' : ''}}Upload</h2>
+            <p>{{ strpos(Request::url(), 'simpleupload') !== false ? 'ユーザー登録処理をせずに' : ''}}チームデータ・マッチデータのアップロードが可能です。</p>
         </div>
 
         @include('common.validation')
@@ -17,7 +17,7 @@
                         チームデータアップロード
                     </div>
                     <div class="card-body">
-                        <form accept-charset="UTF-8" role="form" method="post" action="{{ url('team/simpleupload') }}" enctype="multipart/form-data">
+                        <form accept-charset="UTF-8" role="form" method="post" action="{{ strpos(Request::url(), 'simpleupload') !== false ? url('team/simpleupload') : url('team/upload') }}" enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
                                     <label for="teamOwnerName">オーナー名:</label>
@@ -27,11 +27,13 @@
                                     <label for="teamComment">コメント:</label>
                                     <textarea name="teamComment" class="form-control input-alternate" rows="10" id="teamComment" style="padding-bottom: 10em;"></textarea>
                                 </div>
+                                @if(strpos(Request::url(), 'simpleupload') !== false)
                                 <div class="form-group">
                                     <label for="teamDeletePassWord">削除パスワード:</label>
                                     <input type="text" name="teamDeletePassWord" class="form-control input-alternate" rows="5" id="teamDeletePassWord" value=""
                                         style="padding: 0;">
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="teamSearchTags">検索タグ:</label>
                                     <select id="teamSearchTags" class="form-control" name="teamSearchTags">
@@ -65,7 +67,7 @@
                         マッチデータアップロード
                     </div>
                     <div class="card-body">
-                        <form accept-charset="UTF-8" role="form" method="post" action="{{ url('match/simpleupload') }}"
+                        <form accept-charset="UTF-8" role="form" method="post" action="{{ strpos(Request::url(), 'simpleupload') !== false ? url('match/simpleupload') : url('match/upload') }}"
                             enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
@@ -76,10 +78,12 @@
                                     <label for="matchComment">コメント:</label>
                                     <textarea name="matchComment" class="form-control input-alternate" rows="5" id="matchComment" style="padding-bottom: 10em;"></textarea>
                                 </div>
+                                @if(strpos(Request::url(), 'simpleupload') !== false)
                                 <div class="form-group">
                                     <label for="matchDeletePassWord">削除パスワード:</label>
                                     <input type="text" name="matchDeletePassWord" class="form-control input-alternate" rows="5" id="matchDeletePassWord" value="" style="padding: 0;">
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="matchSearchTags">検索タグ:</label>
                                     <select id="matchSearchTags" class="form-control" name="matchSearchTags">
