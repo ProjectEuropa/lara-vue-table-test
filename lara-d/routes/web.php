@@ -17,8 +17,13 @@ Route::get('/', function () {
 Route::get('/simpleupload', function () {
     return view('upload.index');
 });
+Route::get('/upload', function () {
+    return view('upload.index');
+});
 Route::post('/team/simpleupload', 'UploadController@teamSimpleUpload');
+Route::post('/team/upload', 'UploadController@teamUpload');
 Route::post('/match/simpleupload', 'UploadController@matchSimpleUpload');
+Route::post('/match/upload', 'UploadController@matchUpload');
 
 // 検索一覧（チーム・マッチ共用）
 // 実際の検索機能はApiで実施
