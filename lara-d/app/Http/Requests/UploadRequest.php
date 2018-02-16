@@ -54,7 +54,7 @@ class UploadRequest extends FormRequest
                     'matchOwnerName' => 'required|max:12',
                     'matchComment' => 'required|max:200',
                     'matchDeletePassWord' => 'required|max:12',
-                    'matchFile' => 'required|no_che_file|max:260',
+                    'matchFile' => 'required|che_file|max:260|min:250',
                     'matchSearchTags.*' => 'max:20'
                 ];
             } else {
@@ -62,7 +62,7 @@ class UploadRequest extends FormRequest
                 return [
                     'matchOwnerName' => 'required|max:12',
                     'matchComment' => 'required|max:200',
-                    'matchFile' => 'required|no_che_file|max:260',
+                    'matchFile' => 'required|che_file|max:260|min:250',
                     'matchSearchTags.*' => 'max:20'
                 ];
             }
