@@ -59,8 +59,14 @@
                                     </li>
                                 </ul>
                             </li>
+                            @if (Auth::guest())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/simpleupload') }}">Simple Upload</a>
+                            </li>
+                            @else
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/upload') }}">Upload</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/eventnotice') }}">Event Notice</a></li>
+                                @endif
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Video</a>
@@ -70,16 +76,33 @@
                             </li>
                         </ul>
                         <ul class="navbar-nav nav-right">
+                            @if (Auth::guest())
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ url('/login') }}">
                                     Login
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ url('/register') }}">
                                     Register
                                 </a>
                             </li>
+                            @else
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Login: {{ Auth::user()->name }}
+                                    <img src="{{ Auth::user()->avatar }}" height="20" width="20"/>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/mypage') }}">My Page</a></li>
+                                    <form method="POST" name="logout" action="{{ url('/logout') }}">
+                                        {{ csrf_field() }}
+                                        <li><a href="javascript:logout.submit()">Logout</a></li>
+                                    </form>
+                                </ul>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
