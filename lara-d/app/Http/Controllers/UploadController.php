@@ -35,6 +35,7 @@ class UploadController extends Controller
 
         return redirect('/simpleupload')->with('message', 'チームデータのアップロードが完了しました');
     }
+
     /**
      * 
      *
@@ -50,6 +51,42 @@ class UploadController extends Controller
 
         $this->fileService->registerFileData($request, $arrayIsTeamOrNormarUpdate);
 
-        return redirect('/simpleupload')->with('message', 'チームデータのアップロードが完了しました');
+        return redirect('/simpleupload')->with('message', 'マッチデータのアップロードが完了しました');
+    }
+
+    /**
+     * 
+     *
+     * @return 
+     */
+    public function teamUpload(UploadRequest $request)
+    {
+        // チームアップロードかつ通常アップロード
+        $arrayIsTeamOrNormarUpdate = [
+            'isTeam' => \Config::get('const.IS_TEAM_FLG_TRUE'),
+            'isNormalUpdate' => \Config::get('const.IS_NORMAL_UPLOAD_FLG_TRUE')
+        ];
+
+        $this->fileService->registerFileData($request, $arrayIsTeamOrNormarUpdate);
+
+        return redirect('/upload')->with('message', 'チームデータのアップロードが完了しました');
+    }
+
+    /**
+     * 
+     *
+     * @return 
+     */
+    public function matchUpload(UploadRequest $request)
+    {
+        // マッチデータアップロードかつ通常アップロード
+        $arrayIsTeamOrNormarUpdate = [
+            'isTeam' => \Config::get('const.IS_TEAM_FLG_FALSE'),
+            'isNormalUpdate' => \Config::get('const.IS_NORMAL_UPLOAD_FLG_TRUE')
+        ];
+
+        $this->fileService->registerFileData($request, $arrayIsTeamOrNormarUpdate);
+
+        return redirect('/upload')->with('message', 'マッチデータのアップロードが完了しました');
     }
 }
