@@ -35,5 +35,7 @@ Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 
 //インフォメーション
 Route::get('/information', 'InformationController@index');
+//イベント告知
+Route::get('/eventnotice', 'EventNoticeController@index');
 
 Auth::routes();
