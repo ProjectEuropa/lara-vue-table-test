@@ -60,7 +60,7 @@ class FileService {
         $searchTag2 = null;
         $searchTag3 = null;
         $searchTag4 = null;
-        switch (count($searchTags)) {
+        switch ($searchTags !== null ? count($searchTags) : 0) {
             case 4:
                 $searchTag4 = $searchTags[3];
             case 3:
