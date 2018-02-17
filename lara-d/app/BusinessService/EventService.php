@@ -62,4 +62,19 @@ class EventService {
 
         return DB::table('events')->insert($insertArray);
     }
+    
+    /**
+     *
+     * 特定ユーザのイベント削除
+     *
+     * @param String $eventId イベントID
+     * @param String $registerUserId 登録ユーザID
+     * @return int $deleteCount 削除件数
+     */
+    public function deleteUserEvent(String $eventId, String $registerUserId) : int {
+        return DB::table('events')
+                ->where('id', '=', $eventId)
+                ->where('register_user_id', '=', $registerUserId)
+                ->delete();
+    }
 }

@@ -146,6 +146,15 @@ body {
     margin-top: 15px;
 }
 
+ul.nav-pills li a {
+    padding: 0 40px;
+    color: #737373;
+}
+a.active.show {
+    background-color: #5EBABA;
+    color: #fff;
+}
+
 footer {
     background-color: #33BFDB;
     color: #ffffff;

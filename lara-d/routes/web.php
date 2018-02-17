@@ -32,10 +32,23 @@ Route::get('/search/{searchType}', 'SearchController@index');
 Route::get('/search/download/{id}', 'SearchController@download');
 // 削除（チーム・マッチ共用）
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
-
 //インフォメーション
 Route::get('/information', 'InformationController@index');
-//イベント告知
-Route::get('/eventnotice', 'EventNoticeController@index');
+
+Route::group(['middliware' => 'auth'], function() {
+    //イベント告知
+    Route::get('/eventnotice', 'EventNoticeController@index');
+    Route::post('/eventnotice', 'EventNoticeController@register');
+    // マイページ
+    Route::get('/mypage', 'MypageController@index');
+    //マイページ・ファイル削除
+    Route::delete('/mypage/file/delete', 'MypageController@fileDelete');
+    //マイページ・イベント削除
+    Route::delete('/mypage/event/delete', 'MypageController@eventDelete');
+    //マイページ・ユーザ情報編集
+    Route::post('/mypage/edituserinfo', 'MypageController@editUserInfo');
+});
+
+
 
 Auth::routes();

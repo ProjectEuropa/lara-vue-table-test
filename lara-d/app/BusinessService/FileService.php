@@ -107,4 +107,33 @@ class FileService {
                 ->where('delete_password', '=', $request->input('deletePassword') === null ?  '' : $request->input('deletePassword'))
                 ->delete();
     }
+
+    /**
+     *
+     * ユーザファイル検索
+     * @param String $userId ユーザID
+     * @param int $fileType 検索タイプ(team:1 or match:2)
+     * @return $files ユーザファイルデータ
+     */
+    public function searchUserFiles(String $userId, int $fileType) {
+
+        return DB::table('files')
+                ->where('upload_user_id', '=', $userId)
+                ->where('data_type', '=', $fileType)
+                ->orderBy('id', 'desc')->get();
+    }
+
+     /**
+     * 特定ユーザのファイル削除
+     * @param String fileId 削除対象ファイルID
+     * @param String  $upLoadUserId アップロードユーザID
+     * @return int $deleteCount 削除実行レコード数
+     */
+    public function deleteUserFile(String $fileId, String $upLoadUserId) : int {
+        //指定したファイルとアップロードユーザIDを対象として削除
+        return DB::table('files')
+                ->where('id', '=', $fileId)
+                ->where('upload_user_id', '=', $upLoadUserId)
+                ->delete();
+    }
 }
