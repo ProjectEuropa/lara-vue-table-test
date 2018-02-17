@@ -30,11 +30,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="eventDetails">イベント詳細情報:</label>
-                                    <textarea name="eventDetails" class="form-control input-alternate" rows="5" id="eventDetails" placeholder="イベントの詳細情報をご入力ください" style="padding-bottom: 10em;" required></textarea>{!! old('eventDetails') !!}</textarea>
+                                    <textarea name="eventDetails" class="form-control input-alternate" rows="5" id="eventDetails" placeholder="イベントの詳細情報をご入力ください" style="padding-bottom: 10em;" required>{{ old('eventDetails') }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="eventReferenceUrl">イベント参照URL:</label>
-                                    <input type="url" name="eventReferenceUrl" class="form-control input-alternate" rows="5" id="eventReferenceUrl" value="{{ old('eventReferenceUrl') }}" placeholder="イベントの参照となる掲示板やブログのURLをご入力ください" style="padding: 0;" required>
+                                    <input type="url" name="eventReferenceUrl" class="form-control input-alternate" rows="5" id="eventReferenceUrl" value="{{ old('eventReferenceUrl') }}" placeholder="イベントの参照となる掲示板やブログのURLをご入力ください" style="padding: 0;">
                                 </div>
                                 <div class="form-group">
                                     <label for="eventClosingDay">イベント受付期間締切日:</label>
