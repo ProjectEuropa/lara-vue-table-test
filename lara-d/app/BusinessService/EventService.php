@@ -71,10 +71,34 @@ class EventService {
      * @param String $registerUserId 登録ユーザID
      * @return int $deleteCount 削除件数
      */
-    public function deleteUserEvent(String $eventId, String $registerUserId) : int {
+    public function deleteUserEvent(String $eventId, String $registerUserId) : int 
+    {
         return DB::table('events')
                 ->where('id', '=', $eventId)
                 ->where('register_user_id', '=', $registerUserId)
                 ->delete();
+    }
+
+    /**
+     *
+     * 過去表示の日付イベント削除
+     * @return int 削除件数
+     */
+    public function deletePastDisplayingEvents() : int
+    {
+        // 表示日時が現在日付以前のイベントを削除
+        $now = date('Y/m/d H:i:s');
+
+        $count = DB::table('events')
+                ->where('event_displaying_day', '<', $now)
+                ->count();
+
+        if ($count >= 1) {
+            return DB::table('events')
+                ->where('event_displaying_day', '<', $now)
+                ->delete();
+        } else {
+            return 0;
+        }
     }
 }

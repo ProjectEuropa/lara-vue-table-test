@@ -23,6 +23,8 @@ class InformationController extends Controller
      */
     public function index()
     {
+        $this->eventService->deletePastDisplayingEvents();
+
         $events = $this->eventService->searchAllEvents();
 
         return view('information.index')->with('events', $events);
