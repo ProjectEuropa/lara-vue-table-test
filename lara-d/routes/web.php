@@ -50,5 +50,11 @@ Route::group(['middliware' => 'auth'], function() {
 });
 
 
+Route::get('/auth/twitter', 'Auth\SocialController@getTwitterAuth');
+Route::get('/auth/twitter/callback', 'Auth\SocialController@getTwitterAuthCallback');
+Route::get('/auth/google', 'Auth\SocialController@getGoogleAuth');
+Route::get('/auth/google/callback', 'Auth\SocialController@getGoogleAuthCallback');
+
+
 
 Auth::routes();
