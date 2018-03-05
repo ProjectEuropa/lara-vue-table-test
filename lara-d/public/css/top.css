@@ -159,6 +159,9 @@ footer {
     background-color: #33BFDB;
     color: #ffffff;
 }
+.thin-blue-color {
+    background-color: #33BFDB;
+}
 
 @media screen and (max-width: 767px) {
     .c-c-japan {

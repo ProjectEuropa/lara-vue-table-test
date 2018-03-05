@@ -40,27 +40,27 @@
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
             <!-- cell -->
             <div class="col-sm-4">
-                <div class="panel panel-deafult">
-                    <div class="panel-header">検索・ダウンロード機能</div>
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-header lighten-1 white-text thin-blue-color text-center">検索・ダウンロード機能</div>
+                    <div class="card-body">
                         <div class="img-box">
-                            <img src="https://project-europa.herokuapp.com/image/search.png" class="box-img img-responsive">
+                            <img src="{{ asset('image/search_team.png') }}" class="box-img img-responsive">
                         </div>
                         <div>
-                            チームデータ・マッチデータを検索してダウンロードが可能です。
+                            チームデータ・マッチデータを検索してダウンロードが可能です。ユーザ登録なしでもご利用いただけます。
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-deafult">
-                    <div class="panel-header">アップロード機能</div>
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-header lighten-1 white-text thin-blue-color text-center">アップロード機能</div>
+                    <div class="card-body">
                         <div class="img-box">
-                            <img src="https://project-europa.herokuapp.com/image/upload.png" class="box-img img-responsive">
+                            <img src="{{ asset('image/upload.png') }}" class="box-img img-responsive">
                         </div>
                         <div>
                             チームデータ・マッチデータのアップロードが可能です。ユーザ登録なしでもご利用いただけます。
@@ -69,11 +69,11 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="panel panel-deafult">
-                    <div class="panel-header">イベント告知機能</div>
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-header lighten-1 white-text thin-blue-color text-center">イベント告知機能</div>
+                    <div class="card-body">
                         <div class="img-box">
-                            <img src="https://project-europa.herokuapp.com/image/eventnotice.png" class="box-img img-responsive">
+                            <img src="{{ asset('image/eventnotice.png') }}" class="box-img img-responsive">
                         </div>
                         <div>
                             イベントの告知が可能です。大会の告知などにご利用ください。ご利用にはユーザ登録が必要です。
