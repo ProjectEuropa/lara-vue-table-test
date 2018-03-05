@@ -34,6 +34,7 @@ Route::get('/search/download/{id}', 'SearchController@download');
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 //インフォメーション
 Route::get('/information', 'InformationController@index');
+Route::get('/eventcalendar', 'InformationController@calendar');
 
 Route::group(['middliware' => 'auth'], function() {
     //イベント告知

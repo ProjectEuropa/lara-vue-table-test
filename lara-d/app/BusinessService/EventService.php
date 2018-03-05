@@ -101,4 +101,13 @@ class EventService {
             return 0;
         }
     }
+
+    /**
+     *
+     * イベントカンレダー用検索
+     * @return Event
+     */
+    public function searchEventCalendarData() {
+        return DB::table('events')->select('event_name', 'event_reference_url', 'event_closing_day')->get();
+    }
 }

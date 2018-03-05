@@ -29,4 +29,17 @@ class InformationController extends Controller
 
         return view('information.index')->with('events', $events);
     }
+
+    /**
+     * 
+     * イベントカレンダー用データを全件検索
+     *
+     * @return view 
+     */
+    public function calendar() {
+        
+        $events = $this->eventService->searchEventCalendarData();
+
+        return view('information.calendar')->with('events', $events);
+    }
 }
