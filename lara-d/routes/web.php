@@ -32,6 +32,8 @@ Route::get('/search/{searchType}', 'SearchController@index');
 Route::get('/search/download/{id}', 'SearchController@download');
 // 削除（チーム・マッチ共用）
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
+
+Route::get('/sumdownload/{searchType}', 'SumDownloadController@index');
 //インフォメーション
 Route::get('/information', 'InformationController@index');
 Route::get('/eventcalendar', 'InformationController@calendar');

@@ -52,10 +52,10 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="">DL Team</a>
+                                        <a href="{{ url('/sumdownload/team') }}">DL Team</a>
                                     </li>
                                     <li>
-                                        <a href="">DL Match</a>
+                                        <a href="{{ url('/sumdownload/match') }}">DL Match</a>
                                     </li>
                                 </ul>
                             </li>
