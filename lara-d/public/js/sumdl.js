@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -31025,15 +31025,22 @@ if (false) {
 }
 
 /***/ }),
-/* 48 */
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(49);
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(57);
 
 
 /***/ }),
-/* 49 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31042,9 +31049,7 @@ module.exports = __webpack_require__(55);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 __webpack_require__(12);
-
 window.Vue = __webpack_require__(34);
 
 /**
@@ -31053,32 +31058,28 @@ window.Vue = __webpack_require__(34);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('search-component', __webpack_require__(50));
+Vue.component('sumdownload-component', __webpack_require__(58));
 
 var app = new Vue({
-  el: '#app'
+  el: '#sumdl'
 });
 
 /***/ }),
-/* 50 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(51)
-}
 var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(53)
+var __vue_script__ = __webpack_require__(59)
 /* template */
-var __vue_template__ = __webpack_require__(54)
+var __vue_template__ = __webpack_require__(60)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
-var __vue_scopeId__ = "data-v-6406c664"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -31089,7 +31090,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/SearchComponent.vue"
+Component.options.__file = "resources/assets/js/components/SumDownloadComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -31098,9 +31099,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6406c664", Component.options)
+    hotAPI.createRecord("data-v-c92147fe", Component.options)
   } else {
-    hotAPI.reload("data-v-6406c664", Component.options)
+    hotAPI.reload("data-v-c92147fe", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -31111,47 +31112,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(52);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("45f7ebc0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6406c664\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchComponent.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6406c664\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchComponent.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.alert[data-v-6406c664] {\n  padding: 0;\n}\n.table-header .download[data-v-6406c664],\n.table-header .owner[data-v-6406c664] {\n  width: 100px;\n}\n.table-header .created-at[data-v-6406c664] {\n  width: 160px;\n}\n.table-header .delete[data-v-6406c664] {\n  width: 200px;\n}\ndialog[data-v-6406c664]:not([open]) {\n  display: none;\n}\ndialog[data-v-6406c664] {\n  border: none;\n}\ndialog menu[data-v-6406c664] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-6406c664] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-6406c664] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 53 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31223,42 +31184,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [Vue.extend(__WEBPACK_IMPORTED_MODULE_0__SearchBaseComponent___default.a)],
   mounted: function mounted() {
-    this.pagenate("/api/search/" + this.search_type);
+    this.pagenate("/api/sumdownload/" + this.search_type);
   }
 });
 
 /***/ }),
-/* 54 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31290,12 +31227,10 @@ var render = function() {
             _vm._l(_vm.files, function(file) {
               return _c("tr", { key: file.id }, [
                 _c("td", [
-                  _c("a", { attrs: { href: _vm.getLinkFile(file.id) } }, [
-                    _c("i", {
-                      staticClass: "fa fa-cloud-download",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ])
+                  _c("input", {
+                    attrs: { type: "checkbox" },
+                    domProps: { value: file.id }
+                  })
                 ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(file.upload_owner_name))]),
@@ -31338,92 +31273,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(file.file_name))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(file.created_at))]),
-                _vm._v(" "),
-                _c("td", [
-                  file.upload_type == "2"
-                    ? _c(
-                        "form",
-                        {
-                          staticClass: "form-horizontal",
-                          attrs: {
-                            method: "post",
-                            action: "/search/" + _vm.search_type + "/delete",
-                            id: file.id
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "form-inline" }, [
-                              _c("input", {
-                                staticClass: "input-alternate",
-                                attrs: {
-                                  type: "password",
-                                  name: "deletePassword",
-                                  placeholder: "削除パスワード"
-                                },
-                                on: {
-                                  keyup: function($event) {
-                                    if (
-                                      !("button" in $event) &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    _vm.openConfirmDialog(
-                                      file.file_name,
-                                      file.id
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "hidden", name: "id" },
-                                domProps: { value: file.id }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-delete",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.openConfirmDialog(
-                                        file.file_name,
-                                        file.id
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("削除")]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            attrs: { type: "hidden", name: "_token" },
-                            domProps: { value: _vm.csrf }
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            attrs: {
-                              name: "_method",
-                              type: "hidden",
-                              value: "DELETE"
-                            }
-                          })
-                        ]
-                      )
-                    : _vm._e()
-                ])
+                _c("td", [_vm._v(_vm._s(file.created_at))])
               ])
             })
           )
@@ -31589,48 +31439,7 @@ var render = function() {
             2
           )
         ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "dialog",
-        {
-          attrs: { id: "confirm-dialog" },
-          on: {
-            click: function($event) {
-              $event.stopPropagation()
-            }
-          }
-        },
-        [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("input", {
-            attrs: { type: "hidden", id: "delete-form-id", value: "" }
-          }),
-          _vm._v(" "),
-          _c("menu", [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-info",
-                attrs: { id: "cancel" },
-                on: { click: _vm.dialogClose }
-              },
-              [_vm._v("キャンセル")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                attrs: { type: "button" },
-                on: { click: _vm.submitDelete }
-              },
-              [_vm._v("削除する")]
-            )
-          ])
-        ]
-      )
+      ])
     ],
     1
   )
@@ -31642,7 +31451,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "table-header" }, [
-        _c("th", { staticClass: "download" }, [_vm._v("ダウンロード")]),
+        _c("th", { staticClass: "download" }, [_vm._v("全チェック")]),
         _vm._v(" "),
         _c("th", { staticClass: "owner" }, [_vm._v("オーナー名")]),
         _vm._v(" "),
@@ -31650,20 +31459,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("ファイル名")]),
         _vm._v(" "),
-        _c("th", { staticClass: "created-at" }, [_vm._v("アップロード日時")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "delete" }, [_vm._v("削除")])
+        _c("th", { staticClass: "created-at" }, [_vm._v("アップロード日時")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("本当に「"),
-      _c("span", { attrs: { id: "delete-file-name" } }),
-      _vm._v("」を削除しますか？")
     ])
   }
 ]
@@ -31672,15 +31469,9 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6406c664", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-c92147fe", module.exports)
   }
 }
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

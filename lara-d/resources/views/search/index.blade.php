@@ -8,7 +8,7 @@
         <p>{{ $searchType == 'team' ?  'チーム' : 'マッチ' }}データの検索が可能です。ダウンロードアイコンをクリックするとダウンロードが始まります。</p>
     </div>
     <div id="app">
-        <example-component></example-component>
+        <search-component></search-component>
     </div>
 </main>
 @endsection

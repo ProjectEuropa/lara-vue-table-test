@@ -6,20 +6,17 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="table-header">
-                        <th class="download">ダウンロード</th>
+                        <th class="download">全チェック</th>
                         <th class="owner">オーナー名</th>
                         <th>コメント</th>
                         <th>ファイル名</th>
                         <th class="created-at">アップロード日時</th>
-                        <th class="delete">削除</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="file in files" :key="file.id">
                         <td>
-                            <a :href="getLinkFile(file.id)">
-                                <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                            </a>
+                            <input type="checkbox" :value="file.id">
                         </td>
                         <td>{{ file.upload_owner_name }}</td>
                         <td><div v-html="nl2br(file.file_comment)"></div>
@@ -30,19 +27,6 @@
                         </td>
                         <td>{{ file.file_name }}</td>
                         <td>{{ file.created_at }}</td>
-                        <td>
-                            <form method="post" :action="'/search/' + search_type + '/delete'" class="form-horizontal" v-if="file.upload_type == '2'" :id="file.id">
-                                <div class="form-group">
-                                    <div class="form-inline">
-                                        <input type="password" class="input-alternate" name="deletePassword" placeholder="削除パスワード" @keyup.enter="openConfirmDialog(file.file_name, file.id)">
-                                        <input type="hidden" name="id" class="form-control" :value="file.id">
-                                        <button type="button" class="btn btn-info btn-delete" @click="openConfirmDialog(file.file_name, file.id)">削除</button>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="_token" :value="csrf">
-                                <input name="_method" type="hidden" value="DELETE">
-                            </form>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -76,14 +60,6 @@
                 </ul>
             </nav>
         </div>
-        <dialog id="confirm-dialog" @click.stop>
-            <p>本当に「<span id="delete-file-name"></span>」を削除しますか？</p>
-            <input type="hidden" id="delete-form-id" value="">
-            <menu>
-              <button id="cancel" class="btn btn-info" @click="dialogClose">キャンセル</button>
-              <button type="button" class="btn btn-danger" @click="submitDelete">削除する</button>
-            </menu>
-        </dialog>
     </div>
 </template>
 
@@ -95,45 +71,8 @@ export default {
     Vue.extend(SearchBase)
   ],
   mounted() {
-    this.pagenate("/api/search/" + this.search_type);
+    this.pagenate("/api/sumdownload/" + this.search_type);
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.alert {
-  padding: 0;
-}
-.table-header {
-  .download,
-  .owner {
-    width: 100px;
-  }
-  .created-at {
-    width: 160px;
-  }
-  .delete {
-    width: 200px;
-  }
-}
-dialog:not([open]) {
-  display: none;
-}
-dialog {
-  border: none;
-  menu {
-    padding: 0;
-    margin: 0;
-  }
-  p {
-    text-align: center;
-  }
-}
-@media screen and (max-width: 767px) {
-  table {
-    overflow: auto;
-    white-space: nowrap;
-  }
-}
-</style>
 
