@@ -47,7 +47,7 @@
                     <div class="card-header lighten-1 white-text thin-blue-color text-center">検索・ダウンロード機能</div>
                     <div class="card-body">
                         <div class="img-box">
-                            <img src="{{ asset('image/search_team.png') }}" class="box-img img-responsive">
+                            <img src="{{ asset('image/search_team.png') }}" class="box-img img-fluid">
                         </div>
                         <div>
                             チームデータ・マッチデータを検索してダウンロードが可能です。ユーザ登録なしでもご利用いただけます。
@@ -60,7 +60,7 @@
                     <div class="card-header lighten-1 white-text thin-blue-color text-center">アップロード機能</div>
                     <div class="card-body">
                         <div class="img-box">
-                            <img src="{{ asset('image/upload.png') }}" class="box-img img-responsive">
+                            <img src="{{ asset('image/upload.png') }}" class="box-img img-fluid">
                         </div>
                         <div>
                             チームデータ・マッチデータのアップロードが可能です。ユーザ登録なしでもご利用いただけます。
@@ -73,7 +73,7 @@
                     <div class="card-header lighten-1 white-text thin-blue-color text-center">イベント告知機能</div>
                     <div class="card-body">
                         <div class="img-box">
-                            <img src="{{ asset('image/eventnotice.png') }}" class="box-img img-responsive">
+                            <img src="{{ asset('image/eventnotice.png') }}" class="box-img img-fluid">
                         </div>
                         <div>
                             イベントの告知が可能です。大会の告知などにご利用ください。ご利用にはユーザ登録が必要です。
