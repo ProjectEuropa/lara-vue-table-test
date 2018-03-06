@@ -12,6 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/sumdl.js', 'public/js')
     .scripts([
         'resources/assets/material-js/jquery-3.2.1.min.js',
         'resources/assets/material-js/bootstrap.min.js',
