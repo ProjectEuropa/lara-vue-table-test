@@ -36,6 +36,11 @@ Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 Route::get('/information', 'InformationController@index');
 Route::get('/eventcalendar', 'InformationController@calendar');
 
+// リンク集画面
+Route::get('/links', function () {
+    return view('links.index');
+});
+
 Route::group(['middliware' => 'auth'], function() {
     //イベント告知
     Route::get('/eventnotice', 'EventNoticeController@index');

@@ -69,10 +69,7 @@
                                 @endif
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Video</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Links</a>
+                                <a class="nav-link" href="{{ url('/links') }}">Links</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav nav-right">
