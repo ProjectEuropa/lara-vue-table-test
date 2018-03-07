@@ -30762,6 +30762,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     submitDelete: function submitDelete() {
       document.getElementById(String(document.getElementById("delete-form-id").value)).submit();
+      document.getElementById('submit-delete').disabled = true;
     }
   }
 });
@@ -31199,6 +31200,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       child_check.forEach(function (element) {
         element.checked = document.getElementById("parent-check").checked;
       });
+    },
+    loading: function loading() {
+      var spinHandle = loadingOverlay().activate();
+      setTimeout(function () {
+        loadingOverlay().cancel(spinHandle);
+      }, 5000);
+      document.getElementById('sumdl-submit').submit();
     }
   },
   mounted: function mounted() {
@@ -31233,7 +31241,19 @@ var render = function() {
       _c("div", { staticClass: "row table-responsive" }, [
         _c(
           "form",
-          { attrs: { method: "post", action: "/sumdownload/download" } },
+          {
+            attrs: {
+              method: "post",
+              action: "/sumdownload/download",
+              id: "sumdl-submit"
+            },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.loading($event)
+              }
+            }
+          },
           [
             _c("table", { staticClass: "table table-bordered table-hover" }, [
               _c("thead", [

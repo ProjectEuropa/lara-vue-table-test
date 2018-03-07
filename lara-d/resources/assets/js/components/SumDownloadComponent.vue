@@ -3,7 +3,7 @@
         <search-filter v-on:call-parent-search="searchFunction"></search-filter>
         <div class="table-number">{{ total }}件中 {{ from }} 〜 {{ to }}件</div>
         <div class="row table-responsive">
-            <form method="post" action="/sumdownload/download">
+            <form method="post" action="/sumdownload/download" v-on:submit.prevent="loading" id="sumdl-submit">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr class="table-header">
@@ -78,7 +78,14 @@ export default {
       child_check.forEach(element => {
         element.checked = document.getElementById("parent-check").checked;
       });
-    }
+    },
+    loading() {
+      const spinHandle = loadingOverlay().activate();
+      setTimeout(() => {
+        loadingOverlay().cancel(spinHandle);
+      }, 5000);
+      document.getElementById('sumdl-submit').submit();
+    },
   },
   mounted() {
     this.pagenate("/api/sumdownload/" + this.search_type);
