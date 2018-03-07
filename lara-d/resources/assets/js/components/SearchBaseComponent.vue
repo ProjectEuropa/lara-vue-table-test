@@ -73,7 +73,7 @@ export default {
     },
     pagenate(url) {
       const spinHandle = loadingOverlay().activate();
-      setTimeout(() => {loadingOverlay().cancel(spinHandle)}, 1000);
+      setTimeout(() => {loadingOverlay().cancel(spinHandle)}, 2000);
       axios.get(url).then(res => {
         this.files = res.data.data;
         this.current_page = res.data.current_page;
@@ -111,13 +111,19 @@ export default {
 .table-header {
   .download,
   .owner {
-    width: 100px;
+    width: 120px;
   }
   .created-at {
     width: 160px;
   }
   .delete {
     width: 200px;
+  }
+  .sumdownload {
+    width: 130px;
+  }
+  label {
+    margin: 0;
   }
 }
 dialog:not([open]) {
