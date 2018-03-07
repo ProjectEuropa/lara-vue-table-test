@@ -30762,6 +30762,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     submitDelete: function submitDelete() {
       document.getElementById(String(document.getElementById("delete-form-id").value)).submit();
+      document.getElementById('submit-delete').disabled = true;
     }
   }
 });
@@ -31623,7 +31624,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-danger",
-                attrs: { type: "button" },
+                attrs: { type: "button", id: "submit-delete" },
                 on: { click: _vm.submitDelete }
               },
               [_vm._v("削除する")]

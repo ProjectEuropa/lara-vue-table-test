@@ -11,6 +11,15 @@
     dialog menu {
         padding: 0;
         margin: 0;
+    }
+    .alert {
+        padding: 0;
+    }
+    @media screen and (max-width: 767px) {
+        table {
+          overflow: auto;
+          white-space: nowrap;
+        }
       }
 </style>
 @endsection
@@ -77,16 +86,16 @@
                             <td class="">
                                 <div>{!! nl2br(e($team->file_comment)) !!}</div>
                                 @if (!(empty($team->search_tag1)))
-                                <i class="fa fa-search"></i>{{ $team->search_tag1 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $team->search_tag1 }}</i></span>
                                 @endif
                                 @if (!(empty($team->search_tag2)))
-                                <i class="fa fa-search"></i>{{ $team->search_tag2 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $team->search_tag2 }}</i></span>
                                 @endif
                                 @if (!(empty($team->search_tag3)))
-                                <i class="fa fa-search"></i>{{ $team->search_tag3 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $team->search_tag3 }}</i></span>
                                 @endif
                                 @if (!(empty($team->search_tag4)))
-                                <i class="fa fa-search"></i>{{ $team->search_tag4 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $team->search_tag4 }}</i></span>
                                 @endif
                             </td>
                             <td class="">{{ $team->file_name }}</td>
@@ -137,16 +146,16 @@
                             <td class="">
                                 <div>{!! nl2br(e($match->file_comment)) !!}</div>
                                 @if (!(empty($match->search_tag1)))
-                                <i class="fa fa-search"></i>{{ $match->search_tag1 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $match->search_tag1 }}</i></span>
                                 @endif
                                 @if (!(empty($match->search_tag2)))
-                                <i class="fa fa-search"></i>{{ $match->search_tag2 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $match->search_tag2 }}</i></span>
                                 @endif
                                 @if (!(empty($match->search_tag3)))
-                                <i class="fa fa-search"></i>{{ $match->search_tag3 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $match->search_tag3 }}</i></span>
                                 @endif
                                 @if (!(empty($match->search_tag4)))
-                                <i class="fa fa-search"></i>{{ $match->search_tag4 }}</i>
+                                <span class="alert alert-info"><i class="fa fa-search"></i>{{ $match->search_tag4 }}</i></span>
                                 @endif
                             </td>
                             <td class="">{{ $match->file_name }}</td>
@@ -224,7 +233,7 @@
     <input type="hidden" id="delete-form-id" value="">
     <menu class="text-center">
       <button id="cancel" class="btn btn-info" onclick="document.getElementById('confirm-dialog').close();">キャンセル</button>
-      <button type="button" class="btn btn-danger" onclick="document.getElementById(document.getElementById('delete-form-id').value).submit();">削除する</button>
+      <button type="button" id="delete-submit" class="btn btn-danger" onclick="document.getElementById(document.getElementById('delete-form-id').value).submit(); document.getElementById('delete-submit').disabled = true;">削除する</button>
     </menu>
 </dialog>
 @endsection

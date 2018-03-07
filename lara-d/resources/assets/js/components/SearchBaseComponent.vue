@@ -99,6 +99,7 @@ export default {
     },
     submitDelete() {
       document.getElementById(String(document.getElementById("delete-form-id").value)).submit();
+      document.getElementById('submit-delete').disabled = true;
     }
   }
 };

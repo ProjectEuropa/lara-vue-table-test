@@ -81,7 +81,7 @@
             <input type="hidden" id="delete-form-id" value="">
             <menu>
               <button id="cancel" class="btn btn-info" @click="dialogClose">キャンセル</button>
-              <button type="button" class="btn btn-danger" @click="submitDelete">削除する</button>
+              <button type="button" id="submit-delete" class="btn btn-danger" @click="submitDelete">削除する</button>
             </menu>
         </dialog>
     </div>
