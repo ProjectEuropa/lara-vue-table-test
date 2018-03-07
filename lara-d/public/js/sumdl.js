@@ -30641,7 +30641,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.alert[data-v-21b2c606] {\n  padding: 0;\n}\n.table-header .download[data-v-21b2c606],\n.table-header .owner[data-v-21b2c606] {\n  width: 100px;\n}\n.table-header .created-at[data-v-21b2c606] {\n  width: 160px;\n}\n.table-header .delete[data-v-21b2c606] {\n  width: 200px;\n}\ndialog[data-v-21b2c606]:not([open]) {\n  display: none;\n}\ndialog[data-v-21b2c606] {\n  border: none;\n}\ndialog menu[data-v-21b2c606] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-21b2c606] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-21b2c606] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
+exports.push([module.i, "\n.alert[data-v-21b2c606] {\n  padding: 0;\n}\n.table-header .download[data-v-21b2c606],\n.table-header .owner[data-v-21b2c606] {\n  width: 120px;\n}\n.table-header .created-at[data-v-21b2c606] {\n  width: 160px;\n}\n.table-header .delete[data-v-21b2c606] {\n  width: 200px;\n}\n.table-header .sumdownload[data-v-21b2c606] {\n  width: 130px;\n}\n.table-header label[data-v-21b2c606] {\n  margin: 0;\n}\ndialog[data-v-21b2c606]:not([open]) {\n  display: none;\n}\ndialog[data-v-21b2c606] {\n  border: none;\n}\ndialog menu[data-v-21b2c606] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-21b2c606] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-21b2c606] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
 
 // exports
 
@@ -30736,7 +30736,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var spinHandle = loadingOverlay().activate();
       setTimeout(function () {
         loadingOverlay().cancel(spinHandle);
-      }, 1000);
+      }, 2000);
       axios.get(url).then(function (res) {
         _this.files = res.data.data;
         _this.current_page = res.data.current_page;
@@ -31184,11 +31184,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [Vue.extend(__WEBPACK_IMPORTED_MODULE_0__SearchBaseComponent___default.a)],
+  methods: {
+    allCheck: function allCheck() {
+      var child_check = document.querySelectorAll(".child-check");
+      child_check.forEach(function (element) {
+        element.checked = document.getElementById("parent-check").checked;
+      });
+    }
+  },
   mounted: function mounted() {
     this.pagenate("/api/sumdownload/" + this.search_type);
   }
@@ -31219,65 +31231,105 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row table-responsive" }, [
-        _c("table", { staticClass: "table table-bordered table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.files, function(file) {
-              return _c("tr", { key: file.id }, [
-                _c("td", [
-                  _c("input", {
-                    attrs: { type: "checkbox" },
-                    domProps: { value: file.id }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(file.upload_owner_name))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", {
-                    domProps: {
-                      innerHTML: _vm._s(_vm.nl2br(file.file_comment))
-                    }
-                  }),
+        _c(
+          "form",
+          { attrs: { method: "post", action: "/sumdownload/download" } },
+          [
+            _c("table", { staticClass: "table table-bordered table-hover" }, [
+              _c("thead", [
+                _c("tr", { staticClass: "table-header" }, [
+                  _c("th", { staticClass: "sumdownload" }, [
+                    _c("label", [
+                      _c("input", {
+                        attrs: { type: "checkbox", id: "parent-check" },
+                        on: { click: _vm.allCheck }
+                      }),
+                      _vm._v("全チェック")
+                    ])
+                  ]),
                   _vm._v(" "),
-                  file.search_tag1
-                    ? _c("span", { staticClass: "alert alert-info" }, [
-                        _c("i", { staticClass: "fa fa-search" }),
-                        _vm._v(_vm._s(file.search_tag1))
-                      ])
-                    : _vm._e(),
+                  _c("th", { staticClass: "owner" }, [_vm._v("オーナー名")]),
                   _vm._v(" "),
-                  file.search_tag2
-                    ? _c("span", { staticClass: "alert alert-info" }, [
-                        _c("i", { staticClass: "fa fa-search" }),
-                        _vm._v(_vm._s(file.search_tag2))
-                      ])
-                    : _vm._e(),
+                  _c("th", [_vm._v("コメント")]),
                   _vm._v(" "),
-                  file.search_tag3
-                    ? _c("span", { staticClass: "alert alert-info" }, [
-                        _c("i", { staticClass: "fa fa-search" }),
-                        _vm._v(_vm._s(file.search_tag3))
-                      ])
-                    : _vm._e(),
+                  _c("th", [_vm._v("ファイル名")]),
                   _vm._v(" "),
-                  file.search_tag4
-                    ? _c("span", { staticClass: "alert alert-info" }, [
-                        _c("i", { staticClass: "fa fa-search" }),
-                        _vm._v(_vm._s(file.search_tag4))
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(file.file_name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(file.created_at))])
-              ])
-            })
-          )
-        ])
+                  _c("th", { staticClass: "created-at" }, [
+                    _vm._v("アップロード日時")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.files, function(file) {
+                  return _c("tr", { key: file.id }, [
+                    _c("td", [
+                      _c("input", {
+                        staticClass: "child-check",
+                        attrs: { type: "checkbox", name: "checkFileId[]" },
+                        domProps: { value: file.id }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(file.upload_owner_name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", {
+                        domProps: {
+                          innerHTML: _vm._s(_vm.nl2br(file.file_comment))
+                        }
+                      }),
+                      _vm._v(" "),
+                      file.search_tag1
+                        ? _c("span", { staticClass: "alert alert-info" }, [
+                            _c("i", { staticClass: "fa fa-search" }),
+                            _vm._v(_vm._s(file.search_tag1))
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      file.search_tag2
+                        ? _c("span", { staticClass: "alert alert-info" }, [
+                            _c("i", { staticClass: "fa fa-search" }),
+                            _vm._v(_vm._s(file.search_tag2))
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      file.search_tag3
+                        ? _c("span", { staticClass: "alert alert-info" }, [
+                            _c("i", { staticClass: "fa fa-search" }),
+                            _vm._v(_vm._s(file.search_tag3))
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      file.search_tag4
+                        ? _c("span", { staticClass: "alert alert-info" }, [
+                            _c("i", { staticClass: "fa fa-search" }),
+                            _vm._v(_vm._s(file.search_tag4))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(file.file_name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(file.created_at))])
+                  ])
+                })
+              )
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-info", attrs: { type: "submit" } },
+              [_vm._v("一括ダウンロード")]
+            )
+          ]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-left" }, [
@@ -31444,26 +31496,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "table-header" }, [
-        _c("th", { staticClass: "download" }, [_vm._v("全チェック")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "owner" }, [_vm._v("オーナー名")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("コメント")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ファイル名")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "created-at" }, [_vm._v("アップロード日時")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

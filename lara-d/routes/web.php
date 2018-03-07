@@ -34,6 +34,7 @@ Route::get('/search/download/{id}', 'SearchController@download');
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
 
 Route::get('/sumdownload/{searchType}', 'SumDownloadController@index');
+Route::post('/sumdownload/download', 'SumDownloadController@download');
 //インフォメーション
 Route::get('/information', 'InformationController@index');
 Route::get('/eventcalendar', 'InformationController@calendar');

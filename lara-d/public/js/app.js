@@ -30641,7 +30641,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.alert[data-v-21b2c606] {\n  padding: 0;\n}\n.table-header .download[data-v-21b2c606],\n.table-header .owner[data-v-21b2c606] {\n  width: 100px;\n}\n.table-header .created-at[data-v-21b2c606] {\n  width: 160px;\n}\n.table-header .delete[data-v-21b2c606] {\n  width: 200px;\n}\ndialog[data-v-21b2c606]:not([open]) {\n  display: none;\n}\ndialog[data-v-21b2c606] {\n  border: none;\n}\ndialog menu[data-v-21b2c606] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-21b2c606] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-21b2c606] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
+exports.push([module.i, "\n.alert[data-v-21b2c606] {\n  padding: 0;\n}\n.table-header .download[data-v-21b2c606],\n.table-header .owner[data-v-21b2c606] {\n  width: 120px;\n}\n.table-header .created-at[data-v-21b2c606] {\n  width: 160px;\n}\n.table-header .delete[data-v-21b2c606] {\n  width: 200px;\n}\n.table-header .sumdownload[data-v-21b2c606] {\n  width: 130px;\n}\n.table-header label[data-v-21b2c606] {\n  margin: 0;\n}\ndialog[data-v-21b2c606]:not([open]) {\n  display: none;\n}\ndialog[data-v-21b2c606] {\n  border: none;\n}\ndialog menu[data-v-21b2c606] {\n    padding: 0;\n    margin: 0;\n}\ndialog p[data-v-21b2c606] {\n    text-align: center;\n}\n@media screen and (max-width: 767px) {\ntable[data-v-21b2c606] {\n    overflow: auto;\n    white-space: nowrap;\n}\n}\n", ""]);
 
 // exports
 
@@ -30736,7 +30736,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var spinHandle = loadingOverlay().activate();
       setTimeout(function () {
         loadingOverlay().cancel(spinHandle);
-      }, 1000);
+      }, 2000);
       axios.get(url).then(function (res) {
         _this.files = res.data.data;
         _this.current_page = res.data.current_page;
