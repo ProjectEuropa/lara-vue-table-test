@@ -24,11 +24,11 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label for="email">メールアドレス:</label>
-                                    <input type="email" class="form-control input-alternate" name="email" value="{{ old('email') }}" style="padding: 0;">
+                                    <input type="email" class="form-control input-alternate" name="email" value="{{ old('email') }}" style="padding: 0;" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">パスワード:</label>
-                                    <input type="password" class="form-control input-alternate" name="password" style="padding: 0;">
+                                    <input type="password" class="form-control input-alternate" name="password" style="padding: 0;" required>
                                 </div>
                                 <div class="pure-controls">
 
@@ -36,7 +36,7 @@
                                     <input id="remember" type="checkbox" name="remember"
                                     {!! old('remember') ? 'checked="checked"' : '' !!} > 継続ログイン
                                 </label>
-                                <a class="pure-button" href="{!! url('/password/email') !!}">
+                                <a class="pure-button" href="{!! url('/password/reset') !!}">
                                     パスワードリセット
                                 </a>
                                 </div>
