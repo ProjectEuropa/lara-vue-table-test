@@ -17,13 +17,9 @@ Route::get('/', function () {
 Route::get('/simpleupload', function () {
     return view('upload.index');
 });
-Route::get('/upload', function () {
-    return view('upload.index');
-});
 Route::post('/team/simpleupload', 'UploadController@teamSimpleUpload');
-Route::post('/team/upload', 'UploadController@teamUpload');
 Route::post('/match/simpleupload', 'UploadController@matchSimpleUpload');
-Route::post('/match/upload', 'UploadController@matchUpload');
+
 
 // 検索一覧（チーム・マッチ共用）
 // 実際の検索機能はApiで実施
@@ -32,7 +28,8 @@ Route::get('/search/{searchType}', 'SearchController@index');
 Route::get('/search/download/{id}', 'SearchController@download');
 // 削除（チーム・マッチ共用）
 Route::delete('/search/{searchType}/delete', 'SearchController@delete');
-
+// 一括ダウンロード一覧（チーム・マッチ共用）
+// 実際の検索機能はApiで実施
 Route::get('/sumdownload/{searchType}', 'SumDownloadController@index');
 Route::post('/sumdownload/download', 'SumDownloadController@download');
 //インフォメーション
@@ -45,6 +42,11 @@ Route::get('/links', function () {
 });
 
 Route::group(['middliware' => 'auth'], function() {
+    Route::get('/upload', function () {
+        return view('upload.index');
+    });
+    Route::post('/match/upload', 'UploadController@matchUpload');
+    Route::post('/team/upload', 'UploadController@teamUpload');
     //イベント告知
     Route::get('/eventnotice', 'EventNoticeController@index');
     Route::post('/eventnotice', 'EventNoticeController@register');
@@ -63,7 +65,5 @@ Route::get('/auth/twitter', 'Auth\SocialController@getTwitterAuth');
 Route::get('/auth/twitter/callback', 'Auth\SocialController@getTwitterAuthCallback');
 Route::get('/auth/google', 'Auth\SocialController@getGoogleAuth');
 Route::get('/auth/google/callback', 'Auth\SocialController@getGoogleAuthCallback');
-
-
 
 Auth::routes();
